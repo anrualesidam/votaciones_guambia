@@ -22,6 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-o)2$-c4*j+&^j&7m^tg$2j+#dq88o8h3xlfx8g9l$50s#z+*vd'
 
+ALLOWED_HOSTS = ["*"] 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -48,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware", 
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -115,8 +118,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']  # le dice a Django dónde buscar archivos estáticos
+STATIC_ROOT = BASE_DIR / 'staticfiles' 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
