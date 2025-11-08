@@ -22,7 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-o)2$-c4*j+&^j&7m^tg$2j+#dq88o8h3xlfx8g9l$50s#z+*vd'
 
-ALLOWED_HOSTS = ["*"] 
 
 
 #CSRF_TRUSTED_ORIGINS = [
@@ -32,7 +31,7 @@ ALLOWED_HOSTS = ["*"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS =["votacionesguambia-production.up.railway.app"] 
 
 
 # Application definition
