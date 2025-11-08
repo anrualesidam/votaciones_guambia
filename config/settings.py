@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,6 +24,11 @@ SECRET_KEY = 'django-insecure-o)2$-c4*j+&^j&7m^tg$2j+#dq88o8h3xlfx8g9l$50s#z+*vd
 
 ALLOWED_HOSTS = ["*"] 
 
+
+#CSRF_TRUSTED_ORIGINS = [
+#    "https://tu-dominio.railway.app",
+#    "https://tu-dominio.com",
+#]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -119,9 +124,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # le dice a Django dónde buscar archivos estáticos
-STATIC_ROOT = BASE_DIR / 'staticfiles' 
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
