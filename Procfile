@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn votaciones_guambia.wsgi
+web: python manage.py migrate && gunicorn config.wsgi:application
