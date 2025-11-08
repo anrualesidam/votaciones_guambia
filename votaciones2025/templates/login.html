@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>Login - Votaciones 2025</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #0052cc, #007bff);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+      }
+
+      .login-container {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        width: 320px;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 25px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 90%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+
+      button {
+        width: 95%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      p {
+        color: #555;
+        margin-top: 20px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h1>Iniciar sesión</h1>
+      <form method="post">
+        <input type="text" placeholder="Usuario" required><br>
+        <input type="password" placeholder="Contraseña" required><br>
+        <button type="submit">Ingresar</button>
+      </form>
+      <p>Bienvenido a Votaciones 2025</p>
+    </div>
+  </body>
+</html>
