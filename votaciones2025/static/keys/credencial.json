@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "votacionesguambia2025",
+  "private_key_id": "a597ec8ea7d0dd21aa8b1a8967cd8a04ca51fe62",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCukZHZ/qarPAij\ngi7MkuGsTq9GCQVy00TEyTYmdd+061AQdkcPwoXvp9+P4KL/SSXpziUi78ScFaMd\nsRK9ozk7C2nZ87N2r1auOHVkY98FYkMdrqpm81/trCdMcRm/F6LTizKNxbXKBHNN\nHXUMIA4sfhgxd0rR/qXcqpasv+cBDudAv1SsGmpgSCL1GiHFn13vjoBS+wO/CkHQ\nI5SxRELtWI0sKoiF8jnCx2EnsaCkowYVIoCsEvURWFJNziQUUpFdI70TbdCytouk\nYVDiWtvBrO5daGr/y0/xkGSM/TNQ3mw/g6ZixktQpHT2plI+T8OfkF+wzxiblgUy\nO9qcYrkDAgMBAAECggEALPD9A4ozjlHeR3n0YmZOAvYe2YDpDi6lvaOvdSdTeFg8\nPIC2uq/xm0k0nO3QCLjkMdUIan4ft686VyKHGJs02KaPkbTTtvJc9m1Ci53KhLBP\nZwzYgbiWMbHoTB2x6yhCmwNy+Fy1+FQ8+tVilMSL4Zh00gdME9PjD3Q7Zi3hYrvu\nmRjY+mhU3swrPGZGSdCJMehoBGdSKwAx9qeyO7S9g0DGOpO8zI0qSWfqZgpVcegU\nksUgzLNLDtHzbXVLAXbG1+FqZOCdPeujrMJNuZ4PYiiHHUPn+noMtiOztIpwrerx\nrO3fxv+fEv31k8rq7W9Wbctll8gBG8yTYpDwzEOKgQKBgQDZaD2Xg9oQPjCsnLbt\n0YQX7FjUju6khsJ9NPpDHhQ5Gb4r/E05fQWy/HErmR9dhk6MYp72on5AiU9Eautg\n1Mp69DHjBlHtulAIYhx2XCbGw4QIQLneeHqiV5maruziHfbWMZTSR+XNP+j4LHHb\n4kFwuKhWHV6ijxA9JHgIQwHZSwKBgQDNjpeOfwV91Vxguu3IhuDXg/lvXV32yz29\nOBYgXNKs2JsV4LEiXGgdEgwbXm5mnqvGIFdNExuwQDiaVk/CS8OuxJYM7+5V0oPd\nE88xvX9TQoAnsXQVWn5Uvry9Hk3mvTpgZ4WESAqFTwwzFTaLmLa/OHL4p7855+ZL\nZ6Uuhb1EKQKBgFykjfJ9zjOzvJwhn9YRvP9QyL2zNsBHaKNgKvDk5Ws7rA0kU2gW\n/ZG6/yK7+mCpNdmewOyKa9Bmcq/N/AVkR/BDFOsQK2NpTGd2H3jUZfW3JRE7O7kw\nj9mUCLGgrvLgH+pAcJF279cZz9XJYq93Z7l4BsvDcitFWX8khj3HCAenAoGBAJbs\n5lxq6SZOHQis12APoFC9Bsz82bwV2BvxbVWPsePVGnGCy6w1+v+1O4xw1lCkmezb\n3B2sNP1A+g5f5yn6pQ/SKXYQSIddDRKqs8uKnk0Mm7oJMflnuzAP59ZXxMzxDUax\nW7gXiRn+Qy/SmH0AwNU/5jKqP96NZWriC8dPzPqZAoGAEsDrZQTujL666K+4nwLA\nMWZaK4rd8KOTeY6LB8d9PPMn+q3+vY9Q6/Z5e+Y1WsrVcvyzRFicMYipw/o3u0tI\nGnLlTcDQq9cAaAy0W7CSXwQ6UND5HwwWmNjkaRKYenhb/ghqeReFU8LY/NmB6jSX\nOUOW7UQRb0VlgCI/JiCgrw4=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@votacionesguambia2025.iam.gserviceaccount.com",
+  "client_id": "102440801261515354978",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40votacionesguambia2025.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

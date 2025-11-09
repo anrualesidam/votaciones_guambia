@@ -17,9 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from votaciones2025.views import loginvotaciones  # importa la nueva vista
 from votaciones2025.views import login  # importa la nueva vista
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', login, name='login'),  # usa la nueva función
+    #path('admin/', admin.site.urls),
+    #path('', login, name='login'),  # usa la nueva función
+    path('', loginvotaciones().login, name='baselogin')
 ]
+#urlpatterns = [
+#    #path('', loginvotaciones().login, name='login'), # usa la nueva función
+#]

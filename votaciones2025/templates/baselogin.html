@@ -1,0 +1,108 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOTACIONES</title>
+    <!-- Incluir archivos de Bootstrap -->
+    <!--<link rel="shortcut icon" href="{% static 'images/Logo_sukha.ico' %}" -->
+
+    
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+   
+
+    <style>
+      @import url("{% static 'css/style.css' %}");
+
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+      <div class="container ">
+          <!--<a class="navbar-brand" href="https://netizenone.xyz/sukha/" target="_blank">
+              <img src="{% static 'images/LogoHorizontallSinBackG.png' %}" width="200" height="100" class="d-inline-block align-top img-fluid" alt="">
+          </a>
+
+           Botón para colapsar la barra de navegación en dispositivos pequeños 
+
+          <button class="navbar-toggler custom-color" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse justify-content-start" id="navbarNav">
+              <ul class="navbar-nav">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'baselogin' %}">Inicio</a>
+                  </li>
+                  {% block serachspectro %}
+                  {% endblock %} 
+              </ul>
+          </div>-->
+      </div>   
+  </nav>
+
+  <main>
+    <!-- Aquí va el contenido principal de la página -->
+    {% block content %}
+    {% endblock %}        
+  </main>
+
+  <!--<footer class="custom-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-3">
+              <h5 style="color: #1ABC9C;">Contacto</h5>
+              <ul class="list-unstyled">
+                <li>Dirección: Dg. 74C #32ee-40</li>
+                <li> Ciudad: Medellín - Colombia</li>
+                <li>Telefono: (+57) 302 611 15 62</li>
+                <li>Email: sukhahealinghome@gmail.com</li>
+              </ul>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+              <h5 style="color: #1ABC9C;">Redes Sociales</h5>
+              <ul class="list-unstyled">
+                <li><a class="custom-color-letter" href="https://wa.me/573136762236?text=Hola%20deseo%20información" target="_blank"><i class="fab fa-whatsapp fa-fw"></i> WhatsApp</a></li>
+                <li><a class="custom-color-letter" href="https://www.instagram.com/sukhahealinghome?igsh=MmxweGEyM3l2ZG5z" target="_blank"><i class="fab fa-instagram fa-fw"></i> Instagram</a></li>
+                <li><a class="custom-color-letter" href="#"><i class="fab fa-facebook fa-fw"></i> Facebook</a></li>
+                <li><a class="custom-color-letter" href="#"><i class="fab fa-twitter fa-fw"></i> Twitter</a></li>
+                
+              </ul>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+              <h5></h5>
+              <ul style="color: #1ABC9C;" class="list-unstyled">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'baselogin' %}">Inicio</a>
+                  </li>
+
+              </ul>
+            </div>
+             <div class="col-sm-6 col-md-3">
+              <h5>Nosotros</h5>
+              <ul class="list-unstyled">
+                <li>Misión</li>
+                <li>Visión</li>
+                <li>Historia</li>
+              </ul>
+            </div>
+            
+          </div>
+
+    </div>
+  </footer> -->
+
+  <!-- Agrega los enlaces a Bootstrap JS y cualquier otro script necesario -->
+  <script src="{% static 'jquery/jquery.min.js' %}"></script>
+  <script href="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+  
+  
+</body>
+</html>
