@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-o)2$-c4*j+&^j&7m^tg$2j+#dq88o8h3xlfx8g9l$50s#z+*vd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS =["votacionesguambia-production.up.railway.app"] 
+ALLOWED_HOSTS =["votacionesguambia-production.up.railway.app","www.votacionesguambia2025.com","votacionesguambia2025.com"] 
 
 
 # Application definition
