@@ -6,16 +6,19 @@ from firebase_admin import credentials, db
 
 import firebase_admin
 
-import os, requests
+import os, requests, json
 import time
 
 #from django.contrib.auth import authenticate, login
 
 from django.contrib import messages
 
+try:
+    url = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                   "static/keys/credencialt.json")
+except:
+    url = json.loads(os.environ["FIREBASE_CREDENTIALS"])
 
-url = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                   "static/keys/credencial.json")
 cred = credentials.Certificate(url)
 
 firebase_admin.initialize_app(cred, {"databaseURL": "https://votacionesguambia2025-default-rtdb.firebaseio.com/" })
