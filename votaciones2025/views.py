@@ -80,6 +80,8 @@ class loginvotaciones:
             error_info = data.get("error", {})
             error_msg = error_info.get("message", "")
 
+            print(error_info,error_msg)
+
 
 
             if error_msg == "EMAIL_NOT_FOUND":
@@ -100,6 +102,12 @@ class loginvotaciones:
                 
                 messages.warning(
                     request, "Demasiados intentos fallidos. Inténtalo más tarde o restablece tu contraseña.")
+                return render(request, 'alert_nofile.html')
+            
+            elif error_msg == "INVALID_LOGIN_CREDENTIALS":
+                
+                messages.warning(
+                    request, "Validar credencialesde usuario.")
                 return render(request, 'alert_nofile.html')
             
             if self.tipo_user=="JUR":
