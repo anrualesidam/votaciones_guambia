@@ -5,10 +5,10 @@ from django.shortcuts import render
 
 import firebase_admin
 from firebase_admin import credentials, firestore
-import os
+import os, requests
+import time
 
-
-from django.contrib.auth import authenticate, login
+#from django.contrib.auth import authenticate, login
 
 from django.contrib import messages
 
@@ -16,17 +16,19 @@ from django.contrib import messages
 url = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                    "static/keys/credencial.json")
 cred = credentials.Certificate(url)
+print(cred)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-def login(request):
-    return render(request, "login_test.html")
+FIREBASE_API_KEY = "AIzaSyCLLBDHkY01khL_fys_cQJ9vFReyzK_PAE"
+#def login(request):
+#    return render(request, "login_test.html")
 
 class loginvotaciones:
-   def login(self,request):
-        return render(request, 'login.html')
+    def login(self,request):
+        #return render(request, 'login.html')
 
-"""if request.method == 'POST':
+        if request.method == 'POST':
     
             self.username = request.POST.get('username')
 
@@ -34,55 +36,163 @@ class loginvotaciones:
 
             self.tipo_user = request.POST.get('opcionesid')
 
-            tipos_de_usuarios={"MECI":"MÉDICO CIRUJANO","ENFER":"ENFERMERA/O","ADMIN":"ADMINISTRADOR/A"}
+            tipos_de_usuarios={"JUR":"JURADO","ADMIN":"ADMINISTRADOR/A"}
 
-            #print(self.username,self.password,self.tipo_user)
+            print(self.username,self.password,self.tipo_user)
 
-            self.user = authenticate(
-                request, username=self.username.lower(), password=self.password)
+            if self.tipo_user == "":
+                messages.warning(
+                request, 'Seleccionar tipo de usuario')
+                return render(request, 'alert_nofile.html')
 
+            #self.user = authenticate(
+            #    request, username=self.username.lower(), password=self.password)
+
+            #print(self.user)
+
+            api_key =FIREBASE_API_KEY# getattr(settings, "FIREBASE_API_KEY", os.getenv("FIREBASE_API_KEY", ""))
+            url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={api_key}"
+            payload = {"email": self.username, "password": self.password, "returnSecureToken": True}
+            
+            
+            
+            r = requests.post(url, json=payload, timeout=10)
+            
+            data = r.json()
+            
             context = {'contenido': self.username.lower(),'tipo_usuario_completo':tipos_de_usuarios[self.tipo_user]}
             
+       
 
-            if self.user is not None:
+            
+            
+            error_info = data.get("error", {})
+            error_msg = error_info.get("message", "")
 
-                if self.tipo_user == "":
-                    messages.warning(
-                    request, 'Seleccionar tipo de usuario')
-                    return render(request, 'alert_nofile.html')
+
+
+            if error_msg == "EMAIL_NOT_FOUND":
+                messages.warning(
+                    request, "El usuario no existe en el sistema.")
+                return render(request, 'alert_nofile.html')
+            elif error_msg == "INVALID_PASSWORD":
+                messages.warning(
+                    request, "Contraseña incorrecta.")
+                return render(request, 'alert_nofile.html')
+            elif error_msg == "USER_DISABLED":
                 
-                elif self.tipo_user!= self.user.tipo_user:
-                    messages.warning(
-                    request, '{} no es tu tipo de usuario, ¡compruébelo!'.format(tipos_de_usuarios[self.tipo_user]))
-                    return render(request, 'alert_nofile.html')
-                
-                login(request, self.user)
+                messages.warning(
+                    request, "La cuenta de usuario está deshabilitada.")
+                return render(request, 'alert_nofile.html')
 
-                if self.user.tipo_user=="MECI":
-                    request.session['correo'] = self.username.lower()
-                    request.session['tipouser'] =self.tipo_user
-                    request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
-                    return render(request, 'homecirujano.html', context)
-
-                elif self.user.tipo_user=="ENFER":
-                    request.session['correo'] = self.username.lower()
-                    request.session['tipouser'] =self.tipo_user
-                    request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
-                    return render(request, 'homeenfermera.html', context)
+            elif error_msg == "TOO_MANY_ATTEMPTS_TRY_LATER":
                 
-                elif self.user.tipo_user=="ADMIN":
-                    request.session['correo'] = self.username.lower()
-                    request.session['tipouser'] =self.tipo_user
-                    request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
-                    return render(request, 'homeadministrador.html', context)               
+                messages.warning(
+                    request, "Demasiados intentos fallidos. Inténtalo más tarde o restablece tu contraseña.")
+                return render(request, 'alert_nofile.html')
+            
+            if self.tipo_user=="JUR":
+                request.session['correo'] = self.username.lower()
+                request.session['tipouser'] =self.tipo_user
+                request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
+                return render(request, 'homejurado.html', context)
+
+            
+            elif self.tipo_user=="ADMIN":
+                request.session['correo'] = self.username.lower()
+                request.session['tipouser'] =self.tipo_user
+                request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
+                return render(request, 'homeadministrador.html', context)
 
             else:
-                # messages.error(request, 'Nombre de usuario o contraseña incorrectos.')
                 messages.warning(
                     request, 'Contraseña o nombre de usuario incorrecto, ¡compruébelo!')
                 return render(request, 'alert_nofile.html')
 
+            
+        
         return render(request, 'login.html')
+                
+
+"""
+            if self.tipo_user=="JUR":
+                request.session['correo'] = self.username.lower()
+                request.session['tipouser'] =self.tipo_user
+                request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
+                return render(request, 'homejurado.html', context)
+
+            
+            elif self.tipo_user=="ADMIN":
+                request.session['correo'] = self.username.lower()
+                request.session['tipouser'] =self.tipo_user
+                request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
+                return render(request, 'homeadministrador.html', context)               
+
+"""
+
+        
     
-    def contact(self, request):
-        return render(request, "contact.html")"""
+
+
+class Home:
+    
+    def leer_documentos_coleccion(self,correo,key_search):
+        docs = db.collection('cirujanos').document(correo).collection("pacientes").document(key_search)
+        return docs.get().to_dict()
+        
+    def buscar_usuario_admin(self,key):
+        
+        correokey=db.collection('pacientes').document(key).collection("info_paciente").document("paciente").get().to_dict()["correo_cir"]
+        #db.collection('pacientes').document(key).get().to_dict()["correo"]
+        #print("urldoc",correokey)
+        docs = db.collection('cirujanos').document(correokey).collection("pacientes").document(key)
+        return docs.get().to_dict()
+
+    def buscar_responsable_usuario(self,key):
+        
+        responsabledicc=db.collection('pacientes').document(key).collection("info_paciente").document("responsable")
+        return responsabledicc.get().to_dict()
+    
+    def buscar_historico_usuario(self,key):
+        
+        historicodb = db.collection('pacientes').document(key).collection("historico")
+        docs = historicodb.stream()
+
+        for doc in docs:
+            print(f"Document ID: {doc.id}")
+            print("Data:", doc.to_dict())
+
+        return docs#.get().to_dict()
+
+    
+    # BUSCARDORES DE USUARIOS
+
+    def homejurado(self, request):
+        id_numer = request.GET.get('buscadorid')
+        tipo_id = request.GET.get('opcionesid')
+
+        correouser =request.session.get('correo')
+        tipousercompleto=request.session.get('tipousercompleto')
+
+
+        key_search=str(tipo_id)+'_'+str(id_numer)
+        print("testt",key_search,correouser)
+        
+        try:
+            resultadosdatosusuario=self.buscar_usuario_admin(key_search)
+            resultadosresponsable=self.buscar_responsable_usuario(key_search)
+
+            resultadoss = {**resultadosdatosusuario, **resultadosresponsable}           
+            resultadoss['tipo_usuario_completo']=tipousercompleto
+        except:
+            resultadoss={"tipo_usuario_completo":"MÉDICO CIRUJANO"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
+            
+
+        return render(request, 'homejurado.html', resultadoss)
+
+    
+
+
+    
+
+    

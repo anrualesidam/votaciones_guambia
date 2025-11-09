@@ -1,0 +1,364 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block baroption %}
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'homeadministrador' %}">Inicio</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'contactloginandminstrador' %}">Contacto</a>
+</li>
+{% endblock %} 
+
+
+{% block content %}
+
+
+<div class="d-flex justify-content-center align-items-center containernew">
+  <h5 class="mb-3">Bienvenido, {{ request.user.username }}!</h5>
+</div>
+
+<div class="d-flex justify-content-center align-items-center containernew">
+  <h5 class="mb-3">Perfil: {{ tipo_usuario_completo}}!</h5>
+</div>
+
+
+<div class="d-flex justify-content-center align-items-center">
+  {% csrf_token %}
+  <div style="  text-align: justify;
+  width: 100%; 
+  max-width: 800px; 
+  height: 800%;
+  margin:0 auto;
+  padding: 20px;">
+
+    <p style="font-size: 20px;"><strong>¿Quiénes somos?</strong></p>
+    <p style="font-size: 18px;">
+      Somos un equipo de Profesionales
+      interdisciplinario dedicado al cuidado de  pacientes postquirúrgicos. Nuestra razón  
+      de ser es tu bienestar y satisfactoria recuperación.
+      (<a href="https://netizenone.xyz/sukha/" target="_blank">Link de página principal</a>).
+      </p>
+  </div>
+</div>
+
+<div class="container text-center">
+  <div class="row align-items-start" style="background-color: #f5f5f5;">   
+   <div class="container">
+
+  <section class="section-content py-3">
+    <div class="row">
+      <aside class="col-lg-3"> 
+  <!-- ============= COMPONENT ============== -->
+        <nav class="sidebar card py-2" style="background-color: #1ABC9C;">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'homeadministrador' %}">Busqueda pacientes</a>
+         </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ingresarcirujano' %}"> Ingresar Cirujano  </a>
+          </li>
+
+          <li class="nav-item"> 
+            <a class="nav-link" href="{% url 'ingresarpacientes' %}"> Ingresar paciente  </a>
+          </li>         
+
+          <li class="nav-item">
+            <a class="nav-link" href="#"> Ingresar Enfermera  </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Tu perfil</a>
+          </li>          
+        </ul>
+        </nav>
+  <!-- ============= COMPONENT END// ============== -->	
+      </aside>
+      <main class="col-lg-9">
+        <p style="font-size: 18px;">
+          Ingresar el número de documento o nombre completo del paciente.
+          </p>
+
+        <form class="d-flex" action="{% url 'homeadministrador' %}" method="GET">
+          <select class="form-select me-2" aria-label="SELECCIONE TIPO ID..." name="opcionesid" required>
+            <option value="" selected>SELECCIONE TIPO ID...</option>
+            <option value="CC">CÉDULA DE CIUDADANÍA</option>
+            <option value="PST">PASAPORTE</option>
+            <option value="CE">CÉDULA EXTRANJERA</option>
+            <option value="CEC">CÉDULA DE EXTRANJERÍA COLOMBIANA</option>
+            <option value="RC">REGISTRO CIVIL</option>
+            <option value="CI">CARNET DE IDENTIDAD</option>
+            <option value="DNI">DOCUMENTO NACIONAL DE IDENTIDAD</option>
+            <!-- Agrega más opciones según sea necesario -->
+          </select>
+          <input class="form-control me-2" type="search" placeholder="NÚMERO DE IDENTIFICACIÓN" aria-label="Search" name="buscadorid" required>
+    
+          <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+
+        
+        {% if tipo_doc %}
+          <h2>Información del paciente</h2>
+          <div style="display: flex;">
+            <div style="flex: 1;">
+                <table>
+
+                    <th class="h6" style="text-align: left;">Tipo Doc: </th>
+                    <tr>
+                        {% if tipo_doc %}
+                        <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ tipo_doc }}</td>
+                        {% endif %}
+                    </tr>
+                 
+                    <th class="h6" style="text-align: left;">Num Doc: </th>
+                    <tr>
+                      {% if num_id %}
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ num_id }}</td>
+                      {% endif %}
+                    </tr>
+
+                    <th class="h6" style="text-align: left;">Nombre: </th>
+                    <tr>
+                      {% if nombre %}
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ nombre }}</td>
+                      {% endif %}
+                    </tr>
+
+                    
+                    <th class="h6" style="text-align: left;">Apellido: </th>
+                    <tr>
+                    {% if apellido %}
+                    <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ apellido }}</td>
+                    {% endif %}
+                    </tr>
+
+                    
+                    <th class="h6" style="text-align: left;">Correo: </th>
+                    <tr>
+                      {% if correo %}
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ correo }}</td>
+                      {% endif %}            
+                    </tr>
+
+                    
+                    <th class="h6" style="text-align: left;">Cirujano: </th>
+                    <tr>
+                      {% if cirujano %}
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ cirujano }}</td>
+                      {% endif %}
+                    </tr>
+                    
+                    
+                    <th class="h6" style="text-align: left;">Correo Cirujano: </th>
+
+                    <tr>
+                      {% if correo_cir %}
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ correo_cir }}</td>
+                      {% endif %}
+                    </tr>
+                </table>
+            </div>
+        
+            <div style="flex: 1;">
+                <table>
+                  <th class="h6" style="text-align: left;">Estado paciente</th>
+                  <tr>
+                      {% if estado %}
+                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ estado }}</td>
+                      {% endif %}
+                  </tr>
+
+                  <th class="h6" style="text-align: left;">País: </th>
+                  <tr>
+                      {% if pais %}
+                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ pais }}</td>
+                      {% endif %}
+                  </tr>
+
+                  <th class="h6" style="text-align: left;">Edad: </th>
+                  <tr>
+                      {% if edad %}
+                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ edad }}</td>
+                      {% endif %}
+                  </tr>
+
+                  <th class="h6" style="text-align: left;">Fecha de nacimiento: </th>
+                  <tr>
+                      {% if fecha_nacimiento %}
+                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ fecha_nacimiento }}</td>
+                      {% endif %}
+                  </tr>
+
+                  <th class="h6" style="text-align: left;">Lugar de nacimiento: </th>
+                  <tr>
+                      {% if lugar_nacimiento %}
+                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ lugar_nacimiento }}</td>
+                      {% endif %}
+                  </tr>
+
+                  <th class="h6" style="text-align: left;">Celular paciente: </th>
+                  <tr>
+                      {% if celular %}
+                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ celular }}</td>
+                      {% endif %}
+                  </tr>
+
+                  <th class="h6" style="text-align: left;">Celular cirujano: </th>
+                  <tr>
+                      {% if celular_cirujano %}
+                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ celular_cirujano }}</td>
+                      {% endif %}
+                  </tr>
+                    
+                    
+                </table>
+            </div>
+          </div>
+
+          <h2>Información del responsable</h2>
+          <div style="display: flex;">
+            <div style="flex: 1;">
+                <table>
+
+                    <th class="h6" style="text-align: left;">Tipo Doc: </th>
+                    <tr>
+                        {% if retipo_doc %}
+                        <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ retipo_doc }}</td>
+                        {% endif %}
+                    </tr>
+                 
+                    <th class="h6" style="text-align: left;">Nombre: </th>
+                    <tr>
+                      {% if renombre %}
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ renombre }}</td>
+                      {% endif %}
+                    </tr>
+
+                  <th class="h6" style="text-align: left;">Celular paciente: </th>
+                  <tr>
+                      {% if recelular %}                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ recelular }}</td>
+                      {% endif %}
+                  </tr>
+
+                  <th class="h6" style="text-align: left;">Ciudad: </th>
+                  <tr>
+                      {% if reciudad %}
+                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ reciudad }}</td>
+                      {% endif %}
+                  </tr>
+
+
+                </table>
+            </div>
+        
+            <div style="flex: 1;">
+                <table>
+                  <th class="h6" style="text-align: left;">Num doc:</th>
+                  <tr>
+                      {% if renum_id %}
+                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ renum_id }}</td>
+                      {% endif %}
+                  </tr>
+
+                  <th class="h6" style="text-align: left;">Apellido: </th>
+                  <tr>
+                      {% if reapellido %}
+                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ reapellido }}</td>
+                      {% endif %}
+                  </tr>
+
+                  <th class="h6" style="text-align: left;">Parentesco: </th>
+                  <tr>
+                      {% if reparentesco %}
+                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ reparentesco }}</td>
+                      {% endif %}
+                  </tr>
+
+                  <th class="h6" style="text-align: left;">Correo: </th>
+                  <tr>
+                      {% if recorreo %}
+                    
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ recorreo }}</td>
+                      {% endif %}
+                  </tr>     
+
+                  
+                    
+                    
+                </table>
+            </div>
+          </div>
+
+        {% endif %}
+      
+      </main>
+    </div>
+  </section>
+  
+    </div><!-- container //  -->
+  
+
+
+  </div>
+
+  <div class="container text-center">
+    <div class="row align-items-start">
+      <div style="display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 20px;">
+    </div>
+    </div>
+  
+  
+  </div>
+
+
+
+
+  
+  
+  </div>
+
+  
+  
+<div class="container text-center">
+  <div class="row align-items-start">
+    <div style="display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;">
+  </div>
+  </div>
+
+
+</div>
+
+
+
+
+{% endblock %}
+
+{% block baroptionpies %}
+
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'homeadministrador' %}">Inicio</a>
+</li>
+
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'contactloginandminstrador' %}">Contacto</a>
+</li>
+{% endblock %}
