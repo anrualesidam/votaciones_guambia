@@ -14,10 +14,9 @@ import time
 from django.contrib import messages
 
 #try:
-#    url = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-#                   "static/keys/credencialt.json")
+url = os.path.join(os.path.dirname(os.path.abspath(__file__)),"static/keys/credencialt.json")
 #except:
-url = json.loads(os.environ["FIREBASE_CREDENTIALS"])
+#url = json.loads(os.environ["FIREBASE_CREDENTIALS"])
 
 cred = credentials.Certificate(url)
 
@@ -71,9 +70,7 @@ class loginvotaciones:
             
             data = r.json()
             
-            role_user=ref_respnsables.get()[data["localId"]]["role"]
-
-            print("Roles=",role_user)
+            
             context = {'contenido': self.username.lower(),'tipo_usuario_completo':tipos_de_usuarios[self.tipo_user]}
             
        
@@ -106,6 +103,9 @@ class loginvotaciones:
                 return render(request, 'alert_nofile.html')
             
             if self.tipo_user=="JUR":
+                role_user=ref_respnsables.get()[data["localId"]]["role"]
+
+                print("Roles=",role_user)
                 request.session['correo'] = self.username.lower()
                 request.session['tipouser'] =self.tipo_user
                 request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
@@ -118,6 +118,9 @@ class loginvotaciones:
 
             
             elif self.tipo_user=="ADMIN":
+                role_user=ref_respnsables.get()[data["localId"]]["role"]
+
+                print("Roles=",role_user)
                 request.session['correo'] = self.username.lower()
                 request.session['tipouser'] =self.tipo_user
                 request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
