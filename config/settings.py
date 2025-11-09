@@ -34,7 +34,6 @@ DEBUG = True
 ALLOWED_HOSTS =["*","votacionesguambia-production.up.railway.app","www.votacionesguambia2025.com","votacionesguambia2025.com"] 
 
 CSRF_TRUSTED_ORIGINS = [
-    "*",
     "https://votacionesguambia-production.up.railway.app",
     "https://www.votacionesguambia2025.com","https://votacionesguambia2025.com"
 ]
