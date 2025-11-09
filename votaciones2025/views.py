@@ -2,9 +2,10 @@
 
 
 from django.shortcuts import render
+from firebase_admin import credentials, db
 
 import firebase_admin
-from firebase_admin import credentials, firestore
+
 import os, requests
 import time
 
@@ -16,9 +17,8 @@ from django.contrib import messages
 url = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                    "static/keys/credencial.json")
 cred = credentials.Certificate(url)
-print(cred)
-firebase_admin.initialize_app(cred)
-db = firestore.client()
+
+firebase_admin.initialize_app(cred, {"databaseURL": "https://votacionesguambia2025-default-rtdb.firebaseio.com/" })
 
 FIREBASE_API_KEY = "AIzaSyCLLBDHkY01khL_fys_cQJ9vFReyzK_PAE"
 #def login(request):
@@ -40,6 +40,14 @@ class loginvotaciones:
 
             print(self.username,self.password,self.tipo_user)
 
+            ref_respnsables = db.reference("usuariosresponsables")
+
+
+            # Leer todos los datos del nodo
+            data_responsables = ref_respnsables.get()
+
+            print("Data responsables=",data_responsables)
+
             if self.tipo_user == "":
                 messages.warning(
                 request, 'Seleccionar tipo de usuario')
@@ -60,6 +68,9 @@ class loginvotaciones:
             
             data = r.json()
             
+            role_user=ref_respnsables.get()[data["localId"]]["role"]
+
+            print("Roles=",role_user)
             context = {'contenido': self.username.lower(),'tipo_usuario_completo':tipos_de_usuarios[self.tipo_user]}
             
        
@@ -95,14 +106,24 @@ class loginvotaciones:
                 request.session['correo'] = self.username.lower()
                 request.session['tipouser'] =self.tipo_user
                 request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
-                return render(request, 'homejurado.html', context)
+                if role_user != "JURADO":
+                    messages.warning(
+                        request, 'Tú no eres un usuario JURADO, ¡compruébelo!')
+                    return render(request, 'alert_nofile.html')
+                else:
+                    return render(request, 'homejurado.html', context)
 
             
             elif self.tipo_user=="ADMIN":
                 request.session['correo'] = self.username.lower()
                 request.session['tipouser'] =self.tipo_user
                 request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
-                return render(request, 'homeadministrador.html', context)
+                if role_user != "ADMIN":
+                    messages.warning(
+                        request, 'Tú no eres un usuario ADMINISTRADOR, ¡compruébelo!')
+                    return render(request, 'alert_nofile.html')
+                else:
+                    return render(request, 'homeadministrador.html', context)
 
             else:
                 messages.warning(
@@ -114,23 +135,7 @@ class loginvotaciones:
         return render(request, 'login.html')
                 
 
-"""
-            if self.tipo_user=="JUR":
-                request.session['correo'] = self.username.lower()
-                request.session['tipouser'] =self.tipo_user
-                request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
-                return render(request, 'homejurado.html', context)
 
-            
-            elif self.tipo_user=="ADMIN":
-                request.session['correo'] = self.username.lower()
-                request.session['tipouser'] =self.tipo_user
-                request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
-                return render(request, 'homeadministrador.html', context)               
-
-"""
-
-        
     
 
 
@@ -189,6 +194,30 @@ class Home:
             
 
         return render(request, 'homejurado.html', resultadoss)
+    
+    def homeadministrador(self, request):
+    
+        id_numer = request.GET.get('buscadorid')
+        tipo_id = request.GET.get('opcionesid')
+
+        tipousercompleto=request.session.get('tipousercompleto')
+        
+        key_search=str(tipo_id)+'_'+str(id_numer)
+
+        print(key_search,tipousercompleto)
+
+        try:
+            resultadosdatosusuario=self.buscar_usuario_admin(key_search)
+            resultadosresponsable=self.buscar_responsable_usuario(key_search)
+
+            resultadoss = {**resultadosdatosusuario, **resultadosresponsable}
+            
+            resultadoss['tipo_usuario_completo']=tipousercompleto
+        except:
+            resultadoss={'tipo_usuario_completo':"ADMINISTRADOR/A"}
+
+        #print("resultados",resultadoss)
+        return render(request, 'homeadministrador.html', resultadoss)
 
     
 
