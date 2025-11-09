@@ -13,9 +13,9 @@ import time
 
 from django.contrib import messages
 
-#try:
+#Experimentacion
 #url = os.path.join(os.path.dirname(os.path.abspath(__file__)),"static/keys/credencialt.json")
-#except:
+#excProduccion
 url = json.loads(os.environ["FIREBASE_CREDENTIALS"])
 
 cred = credentials.Certificate(url)
