@@ -25,7 +25,8 @@ urlpatterns = [
     #path('', login, name='login'),  # usa la nueva función
     path('', loginvotaciones().login, name='baselogin'),
     path('homejurado/', Home().homejurado, name='homejurado'),
-    path('homeadministrador/', Home().homeadministrador, name='homeadministrador')
+    path('homeadministrador/', Home().homeadministrador, name='homeadministrador'),
+    path("registrar_voto/", Home().registrar_voto, name="registrar_voto"),
 ]
 #urlpatterns = [
 #    #path('', loginvotaciones().login, name='login'), # usa la nueva función

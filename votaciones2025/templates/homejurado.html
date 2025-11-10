@@ -13,7 +13,7 @@
 
 
 <div class="d-flex justify-content-center align-items-center containernew">
-  <h5 class="mb-3">Bienvenido, {{ request.user.username }}!</h5>
+  <h5 class="mb-3">Bienvenido, {{ nombrejurado }}!</h5>
 </div>
 
 <div class="d-flex justify-content-center align-items-center containernew">
@@ -74,19 +74,17 @@
       </aside>
       <main class="col-lg-9">
         <p style="font-size: 18px;">
-          Ingresar el número de documento o nombre completo del paciente.
+          Ingresar el tipo y número de documento de los usuarios.
           </p>
 
         <form class="d-flex" action="{% url 'homejurado' %}" method="GET">
+          
           <select class="form-select me-2" aria-label="SELECCIONE TIPO ID..." name="opcionesid" required>
             <option value="" selected>SELECCIONE TIPO ID...</option>
-            <option value="CC">CÉDULA DE CIUDADANÍA</option>
-            <option value="PST">PASAPORTE</option>
-            <option value="CE">CÉDULA EXTRANJERA</option>
-            <option value="CEC">CÉDULA DE EXTRANJERÍA COLOMBIANA</option>
-            <option value="RC">REGISTRO CIVIL</option>
-            <option value="CI">CARNET DE IDENTIDAD</option>
-            <option value="DNI">DOCUMENTO NACIONAL DE IDENTIDAD</option>
+            <option value="CC">CC</option>
+            <option value="TI">TI</option>
+            <option value="RC">RC</option>
+
             <!-- Agrega más opciones según sea necesario -->
           </select>
           <input class="form-control me-2" type="search" placeholder="NÚMERO DE IDENTIFICACIÓN" aria-label="Search" name="buscadorid" required>
@@ -96,7 +94,7 @@
 
         
         {% if tipo_doc %}
-          <h2>Información del paciente</h2>
+          <h2>Información del Usuario</h2>
           <div style="display: flex;">
             <div style="flex: 1;">
                 <table>
@@ -110,8 +108,8 @@
                  
                     <th class="h6" style="text-align: left;">Num Doc: </th>
                     <tr>
-                      {% if num_id %}
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ num_id }}</td>
+                      {% if num_doc %}
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ num_doc }}</td>
                       {% endif %}
                     </tr>
 
@@ -130,60 +128,7 @@
                     {% endif %}
                     </tr>
 
-                    
-                    <th class="h6" style="text-align: left;">Correo: </th>
-                    <tr>
-                      {% if correo %}
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ correo }}</td>
-                      {% endif %}            
-                    </tr>
-
-                    
-                    <th class="h6" style="text-align: left;">Cirujano: </th>
-                    <tr>
-                      {% if cirujano %}
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ cirujano }}</td>
-                      {% endif %}
-                    </tr>
-                    
-                    
-                    <th class="h6" style="text-align: left;">Correo Cirujano: </th>
-
-                    <tr>
-                      {% if correo_cir %}
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ correo_cir }}</td>
-                      {% endif %}
-                    </tr>
-                </table>
-            </div>
-        
-            <div style="flex: 1;">
-                <table>
-                  <th class="h6" style="text-align: left;">Estado paciente</th>
-                  <tr>
-                      {% if estado %}
-                    
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ estado }}</td>
-                      {% endif %}
-                  </tr>
-
-                  <th class="h6" style="text-align: left;">País: </th>
-                  <tr>
-                      {% if pais %}
-                    
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ pais }}</td>
-                      {% endif %}
-                  </tr>
-
-                  <th class="h6" style="text-align: left;">Edad: </th>
-                  <tr>
-                      {% if edad %}
-                    
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ edad }}</td>
-                      {% endif %}
-                  </tr>
-
-                  <th class="h6" style="text-align: left;">Fecha de nacimiento: </th>
+                    <th class="h6" style="text-align: left;">Fecha de nacimiento: </th>
                   <tr>
                       {% if fecha_nacimiento %}
                     
@@ -191,113 +136,106 @@
                       {% endif %}
                   </tr>
 
-                  <th class="h6" style="text-align: left;">Lugar de nacimiento: </th>
-                  <tr>
-                      {% if lugar_nacimiento %}
-                    
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ lugar_nacimiento }}</td>
-                      {% endif %}
-                  </tr>
-
-                  <th class="h6" style="text-align: left;">Celular paciente: </th>
-                  <tr>
-                      {% if celular %}
-                    
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ celular }}</td>
-                      {% endif %}
-                  </tr>
-
-                  <th class="h6" style="text-align: left;">Celular cirujano: </th>
-                  <tr>
-                      {% if celular_cirujano %}
-                    
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ celular_cirujano }}</td>
-                      {% endif %}
-                  </tr>
-                    
-                    
-                </table>
-            </div>
-          </div>
-
-          <h2>Información del responsable</h2>
-          <div style="display: flex;">
-            <div style="flex: 1;">
-                <table>
-
-                    <th class="h6" style="text-align: left;">Tipo Doc: </th>
-                    <tr>
-                        {% if retipo_doc %}
-                        <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ retipo_doc }}</td>
-                        {% endif %}
-                    </tr>
-                 
-                    <th class="h6" style="text-align: left;">Nombre: </th>
-                    <tr>
-                      {% if renombre %}
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ renombre }}</td>
-                      {% endif %}
-                    </tr>
-
-                  <th class="h6" style="text-align: left;">Celular paciente: </th>
-                  <tr>
-                      {% if recelular %}                    
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ recelular }}</td>
-                      {% endif %}
-                  </tr>
-
-                  <th class="h6" style="text-align: left;">Ciudad: </th>
-                  <tr>
-                      {% if reciudad %}
-                    
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ reciudad }}</td>
-                      {% endif %}
-                  </tr>
-
-
+                  
                 </table>
             </div>
         
             <div style="flex: 1;">
                 <table>
-                  <th class="h6" style="text-align: left;">Num doc:</th>
-                  <tr>
-                      {% if renum_id %}
-                    
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ renum_id }}</td>
-                      {% endif %}
-                  </tr>
-
-                  <th class="h6" style="text-align: left;">Apellido: </th>
-                  <tr>
-                      {% if reapellido %}
-                    
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ reapellido }}</td>
-                      {% endif %}
-                  </tr>
-
                   <th class="h6" style="text-align: left;">Parentesco: </th>
                   <tr>
-                      {% if reparentesco %}
+                      {% if parentesco %}
                     
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ reparentesco }}</td>
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ parentesco }}</td>
                       {% endif %}
                   </tr>
 
-                  <th class="h6" style="text-align: left;">Correo: </th>
-                  <tr>
-                      {% if recorreo %}
                     
-                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ recorreo }}</td>
-                      {% endif %}
-                  </tr>     
+                    <th class="h6" style="text-align: left;">Sexo: </th>
+                    <tr>
+                      {% if sexo %}
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ sexo }}</td>
+                      {% endif %}            
+                    </tr>
 
-                  
+                    
+                    
+                    
+                      {% if mesa %}
+                      <th class="h6" style="text-align: left;">Mesa: </th> 
+                      <tr>                 
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ mesa }}</td>
+                      </tr>
+                      {% endif %}
+                      
+                    
+                    
+                    
+                    <th class="h6" style="text-align: left;">Voto: </th>
+
+                    <tr>
+                      {% if voto %}
+                      <td class="form-control me-2 text-xl-left" style="text-align: left;">{{ voto }}</td>
+                      {% endif %}
+                    </tr>
                     
                     
                 </table>
             </div>
+   
+
           </div>
+
+          <h2>Información del Votación</h2>
+          <div style="display: flex;">
+            <div style="flex: 1;">
+                <table>
+
+
+                    <tr>
+                        {% if voto == "no" %}
+                        <th colspan="2" style="text-align: center; padding: 15px;">
+                          <h5 style="color: rgb(1, 255, 35); font-weight: bold; font-size: 28px;">
+                            ⚠️ NO HA REGISTRADO EL VOTO </h5>
+                          <form method="post" action="{% url 'registrar_voto' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="tipo_doc" value="{{ tipo_doc }}">
+                            <input type="hidden" name="num_doc" value="{{ num_doc }}">
+                            <input type="hidden" name="mesa" value="{{ mesa }}">
+                            <button type="submit" class="btn btn-success" style="margin-top: 10px;">
+                              Registrar voto en la mesa {{mesa}}
+                            </button>
+                          </form>
+                        </th>
+                        {% endif %}
+                    </tr>
+
+                    <tr>
+                        {% if voto == "si" %}
+                        <th colspan="2" style="text-align: center; padding: 15px;">
+                          <h5 style="color: rgb(255, 1, 1); font-weight: bold; font-size: 28px;">
+                             ⚠️ YA REGISTRÓ SU VOTO EN LA MESA {{ mesa }}
+                            </h5>
+                          
+                        </th>
+                        {% endif %}
+                    </tr>
+                 
+  
+
+
+
+                </table>
+            </div>
+        
+
+          </div>
+          
+          <li class="nav-item">
+            <a type="button" class="btn btn-primary" href="{% url 'homejurado' %}">BUSCAR OTRO USUARIO</a>
+          </li>
+
+
 
         {% endif %}
       

@@ -117,6 +117,12 @@ class loginvotaciones:
                 request.session['correo'] = self.username.lower()
                 request.session['tipouser'] =self.tipo_user
                 request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
+                request.session["iduserjurado"]=data["localId"]
+
+                context["mesa"]=ref_respnsables.get()[data["localId"]]["mesa"]
+                context["nombrejurado"]=ref_respnsables.get()[data["localId"]]["nombre"]
+                context["iduserjurado"]=data["localId"]
+
                 if role_user != "JURADO":
                     messages.warning(
                         request, 'Tú no eres un usuario JURADO, ¡compruébelo!')
@@ -194,17 +200,37 @@ class Home:
         tipousercompleto=request.session.get('tipousercompleto')
 
 
-        key_search=str(tipo_id)+'_'+str(id_numer)
+        iduserjuradoin =request.session.get('iduserjurado')
+        #tipousercompleto=request.session.get('tipousercompleto')
+
+
+        key_search=str(tipo_id)+str(id_numer)
         print("testt",key_search,correouser)
+
+
+
+
         
         try:
-            resultadosdatosusuario=self.buscar_usuario_admin(key_search)
-            resultadosresponsable=self.buscar_responsable_usuario(key_search)
+            ref_respnsablesdb = db.reference("usuariosresponsables")
 
-            resultadoss = {**resultadosdatosusuario, **resultadosresponsable}           
+            print("RESPONSABLES JURADOS",ref_respnsablesdb.get(),iduserjuradoin)
+            ref_encuentas = db.reference("usuariosencuestados")
+            # Leer todos los datos del nodo           
+
+            data_user=ref_encuentas.get()[key_search]
+
+            #print(data_user)#resultadosdatosusuario=self.buscar_usuario_admin(key_search)
+            #resultadosresponsable=self.buscar_responsable_usuario(key_search)
+
+            resultadoss = {**data_user}#, **resultadosresponsable}           
             resultadoss['tipo_usuario_completo']=tipousercompleto
+            resultadoss["mesa"]=ref_respnsablesdb.get()[iduserjuradoin]["mesa"]
+            resultadoss["nombrejurado"]=ref_respnsablesdb.get()[iduserjuradoin]["nombre"]
+
+            print("RESULTADOS:-----",resultadoss)
         except:
-            resultadoss={"tipo_usuario_completo":"MÉDICO CIRUJANO"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
+            resultadoss={"tipo_usuario_completo":"JURADO"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
             
 
         return render(request, 'homejurado.html', resultadoss)
@@ -232,6 +258,32 @@ class Home:
 
         #print("resultados",resultadoss)
         return render(request, 'homeadministrador.html', resultadoss)
+    
+
+    def registrar_voto(self, request):
+        if request.method == "POST":
+            tipo_id = request.POST.get("tipo_doc")   # leer variable voto
+            id_numer = request.POST.get("num_doc")   # leer variable mesa
+            mesarregistro = request.POST.get("mesa")   # leer variable mesa
+
+            key_search=str(tipo_id)+str(id_numer)
+            print("KEYS_USERS",key_search)
+            try:
+                ref_encuentas = db.reference("usuariosencuestados")
+                ref_encuentas.child(key_search).update({"voto": "si"})
+                ref_encuentas.child(key_search).update({"mesa": mesarregistro})
+                # Leer todos los datos del nodo           
+
+                #data_user=ref_encuentas.get()[key_search]
+                #print("DATA USER",data_user)
+                messages.warning(
+                    request, 'VOTO REGISTRADO EXITOSAMENTE')
+                return render(request, 'alert_nofile_voto.html')
+            except:
+                resultadoss={"tipo_usuario_completo":"JURADO"}
+
+        return render(request, 'homejurado.html', resultadoss)
+
 
     
 
