@@ -26,7 +26,11 @@ urlpatterns = [
     path('', loginvotaciones().login, name='baselogin'),
     path('homejurado/', Home().homejurado, name='homejurado'),
     path('homeadministrador/', Home().homeadministrador, name='homeadministrador'),
+<<<<<<< HEAD
     path("registrar_voto/", Home().registrar_voto, name="registrar_voto"),
+=======
+    path('resultadosadmin/', Home().resultadosadmin, name='resultadosadmin')
+>>>>>>> c19d82ee843ace16090e466cd71322af2248b5a4
 ]
 #urlpatterns = [
 #    #path('', loginvotaciones().login, name='login'), # usa la nueva función

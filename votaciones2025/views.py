@@ -285,7 +285,9 @@ class Home:
         return render(request, 'homejurado.html', resultadoss)
 
 
-    
+    def resultadosadmin(self, request):
+        resultadoss={'tipo_usuario_completo':"ADMINISTRADOR/A"}
+        return render(request, 'resultadosadmin.html', resultadoss) 
 
 
     
