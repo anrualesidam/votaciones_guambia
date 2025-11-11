@@ -19,41 +19,32 @@
       @import url("{% static 'css/style.css' %}");
 
       /* >>> Add these <<< */
-      /* wrapper must have its own height on small screens */
-      .embed-wrap {
-        width: 100%;
+      .embed-wrap { 
+        position: relative; 
+        width: 100%; 
+        min-height: 75vh;   /* gives the iframe visible height */
+      }
+      .embed-wrap iframe {
+        position: absolute; 
+        inset: 0;
+        width: 100%; 
+        height: 100%; 
+        border: 0; 
+        display: block;
       }
 
-      /* Desktop & tablet */
-      @media (min-width: 769px) {
-        .embed-wrap {
-          position: relative;
-          min-height: 75vh;
-        }
-        .embed-wrap iframe {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          border: 0;
-          display: block;
-        }
-      }
-
-      /* Phones: avoid absolute positioning + use modern viewport units */
+      /* --- mobile fix --- */
       @media (max-width: 768px) {
         .embed-wrap {
-          min-height: 90svh;   /* use svh/dvh for iOS toolbar issues */
+          min-height: 90vh;    /* more vertical space on phones */
+          overflow: hidden;    /* prevent scrollbars cutting content */
         }
+
         .embed-wrap iframe {
-          position: relative;  /* let it size naturally */
-          display: block;
-          width: 100%;
-          height: 90svh;       /* try 90dvh/90svh if your browser supports */
-          border: 0;
+          position: relative;  /* let it flow naturally on small screens */
+          height: 90vh;        /* ensure visibility */
         }
       }
-
       /* >>> Add these <<< */
 
     </style>
