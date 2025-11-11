@@ -210,27 +210,37 @@ class Home:
 
 
 
-        
+        resultadoss={}
+
         try:
             ref_respnsablesdb = db.reference("usuariosresponsables")
 
-            print("RESPONSABLES JURADOS",ref_respnsablesdb.get(),iduserjuradoin)
+            #print("RESPONSABLES JURADOS",ref_respnsablesdb.get(),iduserjuradoin)
             ref_encuentas = db.reference("usuariosencuestados")
             # Leer todos los datos del nodo           
 
             data_user=ref_encuentas.get()[key_search]
 
+            
             #print(data_user)#resultadosdatosusuario=self.buscar_usuario_admin(key_search)
             #resultadosresponsable=self.buscar_responsable_usuario(key_search)
 
             resultadoss = {**data_user}#, **resultadosresponsable}           
             resultadoss['tipo_usuario_completo']=tipousercompleto
-            resultadoss["mesa"]=ref_respnsablesdb.get()[iduserjuradoin]["mesa"]
+            resultadoss["mesajurado"]=ref_respnsablesdb.get()[iduserjuradoin]["mesa"]
             resultadoss["nombrejurado"]=ref_respnsablesdb.get()[iduserjuradoin]["nombre"]
 
-            print("RESULTADOS:-----",resultadoss)
+
+            #print("RESULTADOS:-----",resultadoss)
         except:
-            resultadoss={"tipo_usuario_completo":"JURADO"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
+            
+            resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
+            
+
+        return render(request, 'homejurado.html', resultadoss)
+
+    def homejurados(self, request):
+        resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"0"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
             
 
         return render(request, 'homejurado.html', resultadoss)
@@ -264,7 +274,7 @@ class Home:
         if request.method == "POST":
             tipo_id = request.POST.get("tipo_doc")   # leer variable voto
             id_numer = request.POST.get("num_doc")   # leer variable mesa
-            mesarregistro = request.POST.get("mesa")   # leer variable mesa
+            mesarregistro = request.POST.get("mesajurado")   # leer variable mesa
 
             key_search=str(tipo_id)+str(id_numer)
             print("KEYS_USERS",key_search)
@@ -276,9 +286,17 @@ class Home:
 
                 #data_user=ref_encuentas.get()[key_search]
                 #print("DATA USER",data_user)
+                data_user=ref_encuentas.get()[key_search]
+
+            #print(data_user)#resultadosdatosusuario=self.buscar_usuario_admin(key_search)
+            #resultadosresponsable=self.buscar_responsable_usuario(key_search)
+
+                resultadoss = {**data_user}
+                resultadoss={"tipo_usuario_completo":"JURADO"}
                 messages.warning(
                     request, 'VOTO REGISTRADO EXITOSAMENTE')
                 return render(request, 'alert_nofile_voto.html')
+            
             except:
                 resultadoss={"tipo_usuario_completo":"JURADO"}
 
