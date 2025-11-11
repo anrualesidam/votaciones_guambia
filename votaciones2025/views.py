@@ -250,23 +250,51 @@ class Home:
         id_numer = request.GET.get('buscadorid')
         tipo_id = request.GET.get('opcionesid')
 
+        correouser =request.session.get('correo')
         tipousercompleto=request.session.get('tipousercompleto')
-        
-        key_search=str(tipo_id)+'_'+str(id_numer)
 
-        print(key_search,tipousercompleto)
+
+        iduserjuradoin =request.session.get('iduserjurado')
+        #tipousercompleto=request.session.get('tipousercompleto')
+
+
+        key_search=str(tipo_id)+str(id_numer)
+        print("testt",key_search,correouser)
+
+
+
+
+        resultadoss={}
 
         try:
-            resultadosdatosusuario=self.buscar_usuario_admin(key_search)
-            resultadosresponsable=self.buscar_responsable_usuario(key_search)
+            ref_respnsablesdb = db.reference("usuariosresponsables")
 
-            resultadoss = {**resultadosdatosusuario, **resultadosresponsable}
+            #print("RESPONSABLES JURADOS",ref_respnsablesdb.get(),iduserjuradoin)
+            ref_encuentas = db.reference("usuariosencuestados")
+            # Leer todos los datos del nodo           
+
+            data_user=ref_encuentas.get()[key_search]
+
             
-            resultadoss['tipo_usuario_completo']=tipousercompleto
-        except:
-            resultadoss={'tipo_usuario_completo':"ADMINISTRADOR/A"}
+            #print(data_user)#resultadosdatosusuario=self.buscar_usuario_admin(key_search)
+            #resultadosresponsable=self.buscar_responsable_usuario(key_search)
 
-        #print("resultados",resultadoss)
+            resultadoss = {**data_user}#, **resultadosresponsable}           
+            resultadoss['tipo_usuario_completo']=tipousercompleto
+            resultadoss["mesajurado"]=ref_respnsablesdb.get()[iduserjuradoin]["mesa"]
+            resultadoss["nombrejurado"]=ref_respnsablesdb.get()[iduserjuradoin]["nombre"]
+
+
+            #print("RESULTADOS:-----",resultadoss)
+        except:
+            
+            resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
+            
+
+        return render(request, 'homeadministrador.html', resultadoss)
+    
+    def homeadministradors(self, request):
+        resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"0"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
         return render(request, 'homeadministrador.html', resultadoss)
     
 
@@ -301,6 +329,38 @@ class Home:
                 resultadoss={"tipo_usuario_completo":"JURADO"}
 
         return render(request, 'homejurado.html', resultadoss)
+    
+    def registrar_voto_admin(self, request):
+            if request.method == "POST":
+                tipo_id = request.POST.get("tipo_doc")   # leer variable voto
+                id_numer = request.POST.get("num_doc")   # leer variable mesa
+                mesarregistro = request.POST.get("mesajurado")   # leer variable mesa
+
+                key_search=str(tipo_id)+str(id_numer)
+                print("KEYS_USERS",key_search)
+                try:
+                    ref_encuentas = db.reference("usuariosencuestados")
+                    ref_encuentas.child(key_search).update({"voto": "si"})
+                    ref_encuentas.child(key_search).update({"mesa": mesarregistro})
+                    # Leer todos los datos del nodo           
+
+                    #data_user=ref_encuentas.get()[key_search]
+                    #print("DATA USER",data_user)
+                    data_user=ref_encuentas.get()[key_search]
+
+                #print(data_user)#resultadosdatosusuario=self.buscar_usuario_admin(key_search)
+                #resultadosresponsable=self.buscar_responsable_usuario(key_search)
+
+                    resultadoss = {**data_user}
+                    resultadoss={"tipo_usuario_completo":"JURADO"}
+                    messages.warning(
+                        request, 'VOTO REGISTRADO EXITOSAMENTE')
+                    return render(request, 'alert_nofile_voto_admin.html')
+                
+                except:
+                    resultadoss={"tipo_usuario_completo":"ADMINISTRADOR"}
+
+            return render(request, 'homeadministrador.html', resultadoss)
 
 
     def resultadosadmin(self, request):

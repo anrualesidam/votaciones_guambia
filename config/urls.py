@@ -27,7 +27,9 @@ urlpatterns = [
     path('homejurado/', Home().homejurado, name='homejurado'),
     path('homejurados/', Home().homejurados, name='homejurados'),
     path('homeadministrador/', Home().homeadministrador, name='homeadministrador'),
+    path('homeadministradors/', Home().homeadministradors, name='homeadministradors'),
     path("registrar_voto/", Home().registrar_voto, name="registrar_voto"),
+    path("registrar_voto_admin/", Home().registrar_voto_admin, name="registrar_voto_admin"),
     path('resultadosadmin/', Home().resultadosadmin, name='resultadosadmin')
 ]
 #urlpatterns = [
