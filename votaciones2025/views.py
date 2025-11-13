@@ -118,6 +118,7 @@ class loginvotaciones:
                 request.session['tipouser'] =self.tipo_user
                 request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
                 request.session["iduserjurado"]=data["localId"]
+                request.session["nombrejurado"]=ref_respnsables.get()[data["localId"]]["nombre"]
 
                 context["mesa"]=ref_respnsables.get()[data["localId"]]["mesa"]
                 context["nombrejurado"]=ref_respnsables.get()[data["localId"]]["nombre"]
@@ -259,7 +260,7 @@ class Home:
 
 
         key_search=str(tipo_id)+str(id_numer)
-        print("testt",key_search,correouser)
+        print("TEST ADMIN-->",key_search,correouser)
 
 
 
@@ -285,7 +286,7 @@ class Home:
             resultadoss["nombrejurado"]=ref_respnsablesdb.get()[iduserjuradoin]["nombre"]
 
 
-            #print("RESULTADOS:-----",resultadoss)
+            print("RESULTADOS:-----",resultadoss)
         except:
             
             resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
@@ -369,5 +370,48 @@ class Home:
 
 
     
+   
+    def registrovotos(self, request):
+        print("INGRESA A VOTOS")
 
+        numcandidato1=request.GET.get('numcandidato1')
+        numcandidato2=request.GET.get('numcandidato2')
+        numcandidato3=request.GET.get('numcandidato3')
+        numvotoblanco=request.GET.get('numvotoblanco')
+        numanulados=request.GET.get('numanulados')
+
+        iduserjurado=request.session.get('iduserjurado')
+        nombrejurado=request.session.get('nombrejurado')
+
+        print("numcandidato1",numcandidato1,"iduserjurado",iduserjurado)
+
+        
+
+        try:
+            ref_votos = db.reference("resultadosvotaciones")
+            ref_votos.update({"CANDIDATO_2":{"CANDIDATO_1": numcandidato1}})
+            ref_respnsablesdb = db.reference("usuariosresponsables")
+
+            #print("RESPONSABLES JURADOS",ref_respnsablesdb.get(),iduserjuradoin)
+            ref_encuentas = db.reference("usuariosencuestados")
+            # Leer todos los datos del nodo           
+
+  
+
+            
+            #print(data_user)#resultadosdatosusuario=self.buscar_usuario_admin(key_search)
+            #resultadosresponsable=self.buscar_responsable_usuario(key_search)
+
+            #resultadoss = {**data_user}#, **resultadosresponsable}       
+            resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1","nombrejurado":nombrejurado}    
+
+
+
+            
+        except:
+            
+            resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1","nombrejurado":nombrejurado}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
+            
+
+        return render(request, 'registrovotos.html', resultadoss)
     

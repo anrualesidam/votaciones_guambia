@@ -30,7 +30,8 @@ urlpatterns = [
     path('homeadministradors/', Home().homeadministradors, name='homeadministradors'),
     path("registrar_voto/", Home().registrar_voto, name="registrar_voto"),
     path("registrar_voto_admin/", Home().registrar_voto_admin, name="registrar_voto_admin"),
-    path('resultadosadmin/', Home().resultadosadmin, name='resultadosadmin')
+    path('registrovotos/', Home().registrovotos, name='registrovotos'),
+    path('resultadosadmin/', Home().resultadosadmin, name='resultadosadmin'),
 ]
 #urlpatterns = [
 #    #path('', loginvotaciones().login, name='login'), # usa la nueva función
