@@ -110,6 +110,17 @@
               </div>
               <button class="btn btn-success btn-lg mt-2" type="submit">Reportar votaciones</button>
             </form>
+
+            <tr>
+                        {% if noexistevoto == "si" %}
+                        <th colspan="2" style="text-align: center; padding: 15px;">
+                          <h5 style="color: rgb(255, 1, 1); font-weight: bold; font-size: 28px;">
+                              ⚠️ YA REGISTRÓ EL RESULTADO DE VATACIONES
+                            </h5>
+                          
+                        </th>
+                        {% endif %}
+                    </tr>
           </div>
         </main>
 
