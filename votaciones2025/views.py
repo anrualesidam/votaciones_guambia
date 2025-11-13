@@ -389,7 +389,7 @@ class Home:
 
         
 
-        try:
+        if all([numcandidato1, numcandidato2, numcandidato3, numvotoblanco, numanulados]):
             ref_votos = db.reference("resultadosvotaciones")
             ref_votos.update({iduserjurado:{
                 "candidato1": numcandidato1,
@@ -412,15 +412,21 @@ class Home:
             #resultadosresponsable=self.buscar_responsable_usuario(key_search)
 
             #resultadoss = {**data_user}#, **resultadosresponsable}       
-            resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1","nombrejurado":nombrejurado}    
+            resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1","nombrejurado":nombrejurado} 
 
-
-
+            messages.warning(
+                    request, 'RESULTADOS DE VOTACIÓN REGISTRADO EXITOSAMENTE')
+            return render(request, 'alert_nofile_registro_voto.html')  
             
-        except:
+
+        else:
             
             resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1","nombrejurado":nombrejurado}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
             
 
+        return render(request, 'registrovotos.html', resultadoss)
+    
+    def registrovotosexitoso(self, request):
+        resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1"}
         return render(request, 'registrovotos.html', resultadoss)
     
