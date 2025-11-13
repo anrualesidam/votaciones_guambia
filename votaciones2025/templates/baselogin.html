@@ -45,6 +45,8 @@
           </div>-->
       </div>   
   </nav>
+  
+  
 
   <main>
     <!-- Aquí va el contenido principal de la página -->
@@ -103,6 +105,43 @@
   <script src="{% static 'jquery/jquery.min.js' %}"></script>
   <script href="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
   
+  <!--for the bottom to share-->
+  <script>
+    (function () {
+      const shareBtn = document.getElementById('shareBtn');
+      if (!shareBtn) return;
+
+      const shareData = {
+        title: 'Resultados Votaciones Guambía 2025',
+        text: 'Consulta los resultados en la plataforma:',
+        url: 'https://linaruiz2.retool.com/embedded/public/ce0f6bd1-15af-40b0-bac3-09d9854df713',
+      };
+
+      shareBtn.addEventListener('click', async () => {
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+          } catch (err) {
+            console.warn('Share cancelled or not supported', err);
+          }
+        } else {
+          try {
+            await navigator.clipboard.writeText(shareData.url);
+            alert('Enlace copiado al portapapeles');
+          } catch {
+            const tmp = document.createElement('input');
+            tmp.value = shareData.url;
+            document.body.appendChild(tmp);
+            tmp.select();
+            document.execCommand('copy');
+            document.body.removeChild(tmp);
+            alert('Enlace copiado al portapapeles');
+          }
+        }
+      });
+    })();
+  </script>
+
   
 </body>
 </html>
