@@ -119,6 +119,7 @@ class loginvotaciones:
                 request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
                 request.session["iduserjurado"]=data["localId"]
                 request.session["nombrejurado"]=ref_respnsables.get()[data["localId"]]["nombre"]
+                request.session["mesa"]=ref_respnsables.get()[data["localId"]]["mesa"]
 
                 context["mesa"]=ref_respnsables.get()[data["localId"]]["mesa"]
                 context["nombrejurado"]=ref_respnsables.get()[data["localId"]]["nombre"]
@@ -382,6 +383,7 @@ class Home:
 
         iduserjurado=request.session.get('iduserjurado')
         nombrejurado=request.session.get('nombrejurado')
+        mesa=request.session.get('mesa')
 
         print("numcandidato1",numcandidato1,"iduserjurado",iduserjurado)
 
@@ -389,7 +391,14 @@ class Home:
 
         try:
             ref_votos = db.reference("resultadosvotaciones")
-            ref_votos.update({"CANDIDATO_2":{"CANDIDATO_1": numcandidato1}})
+            ref_votos.update({iduserjurado:{
+                "candidato1": numcandidato1,
+                "candidato2": numcandidato2,
+                "candidato3": numcandidato3,
+                "Votoenblanco": numvotoblanco,
+                "Votonulo": numanulados,
+                "mesa":mesa
+            }})
             ref_respnsablesdb = db.reference("usuariosresponsables")
 
             #print("RESPONSABLES JURADOS",ref_respnsablesdb.get(),iduserjuradoin)
