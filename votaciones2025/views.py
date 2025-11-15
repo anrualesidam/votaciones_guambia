@@ -377,7 +377,6 @@ class Home:
 
         numcandidato1=request.GET.get('numcandidato1')
         numcandidato2=request.GET.get('numcandidato2')
-        numcandidato3=request.GET.get('numcandidato3')
         numvotoblanco=request.GET.get('numvotoblanco')
         numanulados=request.GET.get('numanulados')
 
@@ -395,13 +394,12 @@ class Home:
 
         
 
-        if all([numcandidato1, numcandidato2, numcandidato3, numvotoblanco, numanulados]): 
+        if all([numcandidato1, numcandidato2, numvotoblanco, numanulados]): 
                 ref_votos.update({iduserjurado:{
-                    "candidato1": numcandidato1,
-                    "candidato2": numcandidato2,
-                    "candidato3": numcandidato3,
-                    "Votoenblanco": numvotoblanco,
-                    "Votonulo": numanulados,
+                    "plancha1": numcandidato1,
+                    "plancha2": numcandidato2,
+                    "votoblanco": numvotoblanco,
+                    "votonulo": numanulados,
                     "mesa":mesa
                 }})
                 ref_respnsablesdb = db.reference("usuariosresponsables")
