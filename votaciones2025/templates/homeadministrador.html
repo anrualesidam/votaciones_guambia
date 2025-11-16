@@ -13,34 +13,55 @@
 {% block content %}
 
 
-<div class="d-flex justify-content-center align-items-center containernew">
-  <h5 class="mb-3">Bienvenido, {{ request.user.username }}!</h5>
+<div class="d-flex align-items-center justify-content-center my-3" style="gap: 15px;">
+
+  <!-- Imagen izquierda -->
+  <img 
+    src="{% static 'images/logo_bandera_2.jpeg' %}" 
+    alt="Icono"
+    style="width: 60px; height: 60px; object-fit: contain;"
+  >
+
+  <!-- Contenedor de textos centrados -->
+  <div class="text-center">
+    <h5 class="mb-1">Bienvenido, {{ nombrejurado }}!</h5>
+    <h5 class="mb-0">Perfil: {{ tipo_usuario_completo }}!</h5>
+  </div>
 </div>
 
-<div class="d-flex justify-content-center align-items-center containernew">
-  <h5 class="mb-3">Perfil: {{ tipo_usuario_completo}}!</h5>
-</div>
 
 
-<div class="d-flex justify-content-center align-items-center">
+<div class="container my-4">
   {% csrf_token %}
-  <div style="  text-align: justify;
-  width: 100%; 
-  max-width: 800px; 
-  height: 800%;
-  margin:0 auto;
-  padding: 20px;">
+  <div class="row align-items-center">
 
-    <p style="font-size: 20px;"><strong>Plataforma de Votaciones Guambía 2025</strong></p>
-    <p style="font-size: 18px;">
-      La plataforma <strong>Votaciones Guambía 2025</strong> ha sido desarrollada para facilitar la 
-      consulta de los usuarios habilitados para participar en el proceso electoral del territorio de Guambía.
-      <br><br>
-      A través de este sistema, los ciudadanos pueden verificar si están registrados para votar, 
-      asegurando un proceso transparente, ordenado y accesible para toda la comunidad Misak.
-      <br><br>
+    <!-- Columna del texto -->
+    <div class="col-md-7">
+      <div style="text-align: justify; padding: 20px;">
+        <p style="font-size: 20px;">
+          <strong>Plataforma de Votaciones Guambía 2025</strong>
+        </p>
 
-    </p>
+        <p style="font-size: 18px;">
+          La plataforma <strong>Votaciones Guambía 2025</strong> ha sido desarrollada para facilitar la 
+          consulta de los usuarios habilitados para participar en el proceso electoral del territorio de Guambía.
+          <br><br>
+          A través de este sistema, los ciudadanos pueden verificar si están registrados para votar, 
+          asegurando un proceso transparente, ordenado y accesible para toda la comunidad Misak.
+        </p>
+      </div>
+    </div>
+
+    <!-- Columna de la imagen -->
+    <div class="col-md-5 text-center">
+      <img 
+        src="{% static 'images/logo_guambia_1.png' %}" 
+        alt="Imagen" 
+        class="img-fluid"
+        style="max-width: 60%;"
+      >
+    </div>
+
   </div>
 </div>
 
