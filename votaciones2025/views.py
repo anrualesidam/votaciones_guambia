@@ -127,7 +127,7 @@ class loginvotaciones:
 
                 if role_user != "JURADO":
                     messages.warning(
-                        request, 'Tú no eres un usuario JURADO, ¡compruébelo!')
+                        request, 'Tú no eres un usuario JURADO, ¡compruébalo!')
                     return render(request, 'alert_nofile.html')
                 else:
                     return render(request, 'homejurado.html', context)
@@ -142,14 +142,14 @@ class loginvotaciones:
                 request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
                 if role_user != "ADMIN":
                     messages.warning(
-                        request, 'Tú no eres un usuario ADMINISTRADOR, ¡compruébelo!')
+                        request, 'Tú no eres un usuario ADMINISTRADOR, ¡compruébalo!')
                     return render(request, 'alert_nofile.html')
                 else:
                     return render(request, 'homeadministrador.html', context)
 
             else:
                 messages.warning(
-                    request, 'Contraseña o nombre de usuario incorrecto, ¡compruébelo!')
+                    request, 'Contraseña o nombre de usuario incorrecto, ¡compruébalo!')
                 return render(request, 'alert_nofile.html')
 
             
