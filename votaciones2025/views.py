@@ -20,9 +20,9 @@ url = json.loads(os.environ["FIREBASE_CREDENTIALS"])
 
 cred = credentials.Certificate(url)
 
-firebase_admin.initialize_app(cred, {"databaseURL": "https://votacionesguambia2025-default-rtdb.firebaseio.com/" })
+firebase_admin.initialize_app(cred, {"databaseURL": "https://votacioneswampia2026-default-rtdb.firebaseio.com/" })
 
-FIREBASE_API_KEY = "AIzaSyCLLBDHkY01khL_fys_cQJ9vFReyzK_PAE"
+FIREBASE_API_KEY = "AIzaSyA0cvGfdARsV257M-ctH2pakSxUv4Jv5Sc"
 #def login(request):
 #    return render(request, "login_test.html")
 
