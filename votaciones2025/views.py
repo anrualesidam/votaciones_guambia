@@ -318,7 +318,7 @@ class Home:
                 #print("DATA USER",data_user)
                 data_user=ref_encuentas.get()[key_search]
 
-            #print(data_user)#resultadosdatosusuario=self.buscar_usuario_admin(key_search)
+            #print(data_user)#resultadosdatosusuario=self.buscar_usuario_admin(key_search) 
             #resultadosresponsable=self.buscar_responsable_usuario(key_search)
 
                 resultadoss = {**data_user}
