@@ -139,6 +139,7 @@ class loginvotaciones:
                 print("Roles=",role_user)
                 request.session['correo'] = self.username.lower()
                 request.session['tipouser'] =self.tipo_user
+                request.session['iduseradmin']=data["localId"]
                 request.session['tipousercompleto'] = tipos_de_usuarios[self.tipo_user]
                 if role_user != "ADMIN":
                     messages.warning(
@@ -256,12 +257,12 @@ class Home:
         tipousercompleto=request.session.get('tipousercompleto')
 
 
-        iduserjuradoin =request.session.get('iduserjurado')
+        iduserjuradoin =request.session.get('iduseradmin')
         #tipousercompleto=request.session.get('tipousercompleto')
 
 
         key_search=str(tipo_id)+str(id_numer)
-        print("TEST ADMIN-->",key_search,correouser)
+        print("TEST ADMIN-->",key_search,correouser,iduserjuradoin)
 
 
 
@@ -283,7 +284,13 @@ class Home:
 
             resultadoss = {**data_user}#, **resultadosresponsable}           
             resultadoss['tipo_usuario_completo']=tipousercompleto
+
+            #print("RESULTADOS1 :-----",resultadoss)
+
+
             resultadoss["mesajurado"]=ref_respnsablesdb.get()[iduserjuradoin]["mesa"]
+
+            #print("RESULTADOS2 :-----",resultadoss)
             resultadoss["nombrejurado"]=ref_respnsablesdb.get()[iduserjuradoin]["nombre"]
 
 
