@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block baroption %}
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'homeadministrador' %}">Inicio</a>
+</li>
+
+{% endblock %} 
+
+
+{% block content %}
+
+
+<div class="d-flex align-items-center justify-content-center my-3" style="gap: 15px;">
+
+  <!-- Imagen izquierda -->
+  <img 
+    src="{% static 'images/logo_bandera_2.jpeg' %}" 
+    alt="Icono"
+    style="width: 60px; height: 60px; object-fit: contain;"
+  >
+
+  <!-- Contenedor de textos centrados -->
+  <div class="text-center">
+    <h5 class="mb-1">Bienvenido, {{ nombrejurado }}</h5>
+    <h5 class="mb-0">Perfil: {{ tipo_usuario_completo }}</h5>
+  </div>
+</div>
+
+
+
+<div class="container my-4">
+  {% csrf_token %}
+  <div class="row align-items-center">
+
+    <!-- Columna del texto -->
+    <div class="col-md-7">
+      <div style="text-align: justify; padding: 20px;">
+        <p style="font-size: 20px;">
+          <strong>Plataforma de Votaciones Wampia 2027</strong>
+        </p>
+
+        <p style="font-size: 18px;">
+          La plataforma <strong>Votaciones Wampia 2027</strong> ha sido desarrollada para facilitar la 
+          consulta de los usuarios habilitados para participar en el proceso electoral del territorio de Wampia.
+          <br><br>
+          A través de este sistema, los ciudadanos pueden verificar si están registrados para votar, 
+          asegurando un proceso transparente, ordenado y accesible para toda la comunidad Misak.
+        </p>
+      </div>
+    </div>
+
+    <!-- Columna de la imagen -->
+    <div class="col-md-5 text-center">
+      <img 
+        src="{% static 'images/logo_guambia_1.png' %}" 
+        alt="Imagen" 
+        class="img-fluid"
+        style="max-width: 60%;"
+      >
+    </div>
+
+  </div>
+</div>
+
+<div class="container text-center">
+  <div class="row align-items-start" style="background-color: #f5f5f5;">   
+   <div class="container">
+
+  <section class="section-content py-3">
+    <div class="row">
+      <aside class="col-lg-3"> 
+  <!-- ============= COMPONENT ============== -->
+        <nav class="sidebar card py-2" style="background-color: #2e39de;">
+        <ul class="nav flex-column">
+
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'homeadministrador' %}" 
+              style="color: #09f062; font-weight: bold; text-decoration: none; display: block; padding: 10px 15px;">
+              BUSQUEDA DE USUARIOS
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'resultadosadmin' %}" 
+              style="color: #6ab8d9; font-weight: bold; text-decoration: none; display: block; padding: 10px 15px;">
+              RESULTADOS VOTACIONES
+            </a>
+          </li>        
+
+          <li class="nav-item">
+            <a class="btn btn-light" href="{% url 'baselogin' %}">SALIR</a>
+          </li>         
+        </ul>
+        </nav>
+  <!-- ============= COMPONENT END// ============== -->	
+      </aside>
+
+      <!-- ============= poner aqui el dashboard============== -->	
+       <!-- right content -->
+      <div class="col-lg-9">
+        <div class="embed-wrap">
+          <iframe
+            src="https://anrualesidam.retool.com/embedded/public/10a00445-9088-4215-a712-73065d3d21fb"
+            allow="clipboard-write; fullscreen; geolocation; microphone; camera"
+            referrerpolicy="strict-origin-when-cross-origin"
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+  
+    </div><!-- container //  -->
+  
+
+
+  </div>
+
+  <div class="container text-center">
+    <div class="row align-items-start">
+      <div style="display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 20px;">
+    </div>
+    </div>
+  
+  
+  </div>
+
+
+
+
+  
+  
+  </div>
+
+  
+  
+<div class="container text-center">
+  <div class="row align-items-start">
+    <div style="display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;">
+  </div>
+  </div>
+
+
+</div>
+
+
+
+
+{% endblock %}
+
