@@ -31,12 +31,12 @@ SECRET_KEY = 'django-insecure-o)2$-c4*j+&^j&7m^tg$2j+#dq88o8h3xlfx8g9l$50s#z+*vd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS =["*","votacionesguambia-production.up.railway.app","www.votacioneswampia2026.com","votacioneswampia2026.com"] 
+ALLOWED_HOSTS =["*","votacionesguambia-production.up.railway.app","www.votacioneswampia2027.com","votacioneswampia2027.com"] 
 
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000/",
     "https://votacionesguambia-production.up.railway.app",
-    "https://www.votacioneswampia2026.com","https://votacioneswampia2026.com"
+    "https://www.votacioneswampia2027.com","https://votacioneswampia2027.com"
 ]
 
 # Application definition
