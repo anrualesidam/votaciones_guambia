@@ -297,7 +297,7 @@ class Home:
             print("RESULTADOS:-----",resultadoss)
         except:
             
-            resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
+            resultadoss={"tipo_usuario_completo":"ADMINISTRADOR/A","noexistuser":"1"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
             
 
         return render(request, 'homeadministrador.html', resultadoss)

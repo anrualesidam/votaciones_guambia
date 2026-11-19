@@ -1,98 +1,292 @@
 {% extends 'baselogin.html' %}
 {% load static %}
 
-
 {% block content %}
-<div style="height: 20px;"></div> 
+<style>
+  body:has(.wampia-login) {
+    margin: 0;
+    background: #eef3f7;
+  }
 
+  .wampia-login {
+    --wl-ink: #0d1527;
+    --wl-muted: #485264;
+    --wl-line: #d0d6e0;
+    --wl-blue: #0349b0;
+    --wl-blue-dark: #093981;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px 16px 52px;
+    background: #eef3f7;
+    color: var(--wl-ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.4;
+  }
 
-<div class="d-flex justify-content-center align-items-center">
+  .wampia-login *,
+  .wampia-login *::before,
+  .wampia-login *::after {
+    box-sizing: border-box;
+  }
 
-    
-</div>
+  .wampia-login :focus-visible {
+    outline: 3px solid #3274c5;
+    outline-offset: 3px;
+  }
 
+  .wampia-login .wl-brand {
+    text-align: center;
+    margin-bottom: clamp(28px, 3.75vw, 57px);
+  }
 
+  .wampia-login .wl-logo {
+    display: block;
+    width: clamp(112px, 14vw, 208px);
+    height: auto;
+    margin: 0 auto;
+  }
 
-<div class="d-flex justify-content-center align-items-center">
-  
-  <div>
-    
-    <!-- Guambia logo -->
-    <div class="text-center mb-3">
-      <img 
-        src="{% static 'images/logo_guambia_1.png' %}" 
-        alt="Logo Wampia" 
-        class="img-fluid"
-        style="max-width: 180px;"
-      >
-    </div>
-    <!-- 👇 Add this block -->
-    <div class="card p-4" style="background: #2e39de;">
-    
-    <form method="post" enctype="multipart/form-data">
+  .wampia-login .wl-brand-name {
+    margin: 0;
+    font-size: clamp(24px, 2.65vw, 40px);
+    font-weight: 760;
+    line-height: 1.15;
+    letter-spacing: -.03em;
+  }
 
+  .wampia-login .wl-card {
+    width: min(100%, 670px);
+    padding: 24px clamp(19px, 2.37vw, 36px) 34px;
+    border: 1px solid var(--wl-line);
+    border-radius: 18px;
+    background: #fdfdfd;
+    box-shadow: 0 2px 6px rgb(13 21 39 / 7%);
+    text-align: left;
+  }
+
+  .wampia-login .wl-title {
+    margin: 0 0 16px;
+    font-size: clamp(28px, 2.85vw, 43px);
+    font-weight: 780;
+    line-height: 1.14;
+    letter-spacing: -.035em;
+  }
+
+  .wampia-login .wl-form {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+  }
+
+  .wampia-login .wl-field {
+    min-width: 0;
+  }
+
+  .wampia-login .wl-label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: clamp(16px, 1.45vw, 22px);
+    font-weight: 700;
+  }
+
+  .wampia-login .wl-field:last-of-type {
+    margin-top: 4px;
+  }
+
+  .wampia-login .wl-control {
+    display: block;
+    min-height: clamp(46px, 3.36vw, 51px);
+    width: 100%;
+    margin: 0;
+    padding: .55rem clamp(.75rem, 1.3vw, 1.25rem);
+    border: 1px solid #b6bfcc;
+    border-radius: 10px;
+    background: #fdfdfd;
+    color: var(--wl-ink);
+    font: inherit;
+    font-size: clamp(1rem, 1.45vw, 1.4rem);
+    line-height: 1.25;
+  }
+
+  .wampia-login .wl-control::placeholder {
+    color: var(--wl-muted);
+    opacity: 1;
+  }
+
+  .wampia-login .wl-select select {
+    appearance: none;
+    padding-inline-end: 3rem;
+  }
+
+  .wampia-login .wl-select select:has(option[value=""]:checked) {
+    color: var(--wl-muted);
+  }
+
+  .wampia-login .wl-select option {
+    color: var(--wl-ink);
+  }
+
+  .wampia-login .wl-password,
+  .wampia-login .wl-select {
+    position: relative;
+  }
+
+  .wampia-login .wl-password:has(.wl-toggle:not([hidden])) input {
+    padding-inline-end: 3.4rem;
+  }
+
+  .wampia-login .wl-icon {
+    display: block;
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .wampia-login .wl-select > .wl-icon {
+    position: absolute;
+    top: 50%;
+    inset-inline-end: .9rem;
+    transform: translateY(-50%);
+    color: var(--wl-muted);
+    pointer-events: none;
+  }
+
+  .wampia-login .wl-toggle {
+    position: absolute;
+    inset-block: 1px;
+    inset-inline-end: 12px;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    padding: 0;
+    border: 0;
+    border-radius: .5rem;
+    background: transparent;
+    color: var(--wl-muted);
+    cursor: pointer;
+  }
+
+  .wampia-login .wl-toggle[hidden] {
+    display: none;
+  }
+
+  .wampia-login .wl-toggle:hover {
+    background: #edf4ff;
+    color: var(--wl-blue-dark);
+  }
+
+  .wampia-login .wl-toggle[aria-pressed="false"] .wl-eye-slash {
+    display: none;
+  }
+
+  .wampia-login .wl-submit {
+    width: 100%;
+    min-height: clamp(49px, 4.02vw, 61px);
+    margin-top: clamp(8px, 1.05vw, 16px);
+    padding: .65rem 1rem;
+    border: 1px solid var(--wl-blue);
+    border-radius: 11px;
+    background: var(--wl-blue);
+    color: #fff;
+    font: inherit;
+    font-size: clamp(1.05rem, 1.75vw, 1.65rem);
+    font-weight: 720;
+    cursor: pointer;
+  }
+
+  .wampia-login .wl-submit:hover {
+    border-color: var(--wl-blue-dark);
+    background: var(--wl-blue-dark);
+  }
+
+  .wampia-login .wl-motif {
+    display: block;
+    width: min(90%, 582px);
+    height: auto;
+    margin-top: clamp(24px, 2.24vw, 34px);
+  }
+</style>
+
+<div class="wampia-login">
+  <header class="wl-brand">
+    <img class="wl-logo" src="{% static 'images/logo_guambia_1.png' %}"
+         alt="Autoridad Ancestral del Pueblo Misak, Territorio Wampia">
+    <p class="wl-brand-name">Votaciones Wampia 2027</p>
+  </header>
+
+  <section class="wl-card" aria-labelledby="wl-login-title">
+    <h1 class="wl-title" id="wl-login-title">Iniciar sesión</h1>
+
+    <form class="wl-form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      <h2 class="text-center  mb-4" style="color: #ffffff;">INGRESAR</h2>
-        <div class="form-group">
-          <label for="email" style="color: #ffffff;">Correo:</label>
-          <input type="username"  class="form-control" name="username" required>
-      </div>
-      <div class="form-group">
-          <label for="password" style="color: #ffffff;">Contraseña:</label>
-          <input type="password" class="form-control" name="password" required>
+
+      <div class="wl-field">
+        <label class="wl-label" for="wl-username">Correo electrónico</label>
+        <input class="wl-control" id="wl-username" name="username" type="text"
+               inputmode="email" autocomplete="username" autocapitalize="none"
+               spellcheck="false" placeholder="correo@ejemplo.com" required>
       </div>
 
-      <div class="form-group">
-        <label for="password" style="color: #ffffff;">Tipo usuario:</label>
-        <select class="form-select me-2" aria-label="Seleccione Tipo usuario..." name="opcionesid">
-          <option value="" selected>Seleccione Tipo usuario...</option>
-          <option value="JUR">JURADO</option>
-          <option value="ADMIN">ADMINISTRADOR</option>
-          <!-- Agrega más opciones según sea necesario -->
-        </select>
-    </div>
-      
-      <div style="height: 20px;"></div> 
-      <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-light">Iniciar sesión</button>
+      <div class="wl-field">
+        <label class="wl-label" for="wl-password">Contraseña</label>
+        <div class="wl-password">
+          <input class="wl-control" id="wl-password" name="password" type="password"
+                 autocomplete="current-password" placeholder="Ingresa tu contraseña" required>
+          <button class="wl-toggle" id="wl-password-toggle" type="button" hidden
+                  aria-label="Mostrar contraseña" aria-pressed="false" aria-controls="wl-password">
+            <svg class="wl-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"/>
+              <circle cx="12" cy="12" r="2.5"/>
+              <path class="wl-eye-slash" d="M4 4l16 16"/>
+            </svg>
+          </button>
+        </div>
       </div>
+
+      <div class="wl-field">
+        <label class="wl-label" for="wl-user-type">Tipo de usuario</label>
+        <div class="wl-select">
+          <select class="wl-control" id="wl-user-type" name="opcionesid">
+            <option value="" selected>Selecciona una opción</option>
+            <option value="JUR">Jurado</option>
+            <option value="ADMIN">Administrador</option>
+          </select>
+          <svg class="wl-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </div>
+      </div>
+
+      <button class="wl-submit" type="submit">Iniciar sesión</button>
     </form>
-   
-    
-    <!--<a href="#"><p class="text-center">¿Olvidó su contraseña?</p> </a>-->
+  </section>
+
+  <img class="wl-motif" src="{% static 'images/logo_guambia_linea.png' %}" alt="">
+
+  <div hidden>
+    <button id="shareBtn" type="button">Compartir resultados</button>
+    <a href="" target="_blank" rel="noopener">Ver resultados</a>
   </div>
-
-  
-    
 </div>
 
-</div>
+<script>
+  (() => {
+    const passwordField = document.getElementById('wl-password');
+    const toggle = document.getElementById('wl-password-toggle');
 
-<div style="height: 25px;">
+    toggle.addEventListener('click', () => {
+      const shouldShow = passwordField.type === 'password';
+      passwordField.type = shouldShow ? 'text' : 'password';
+      toggle.setAttribute('aria-pressed', String(shouldShow));
+    });
 
-   <!--<aPONER EL BOTOM DE REDIRECT AQUI https://linaruiz2.retool.com/embedded/public/ce0f6bd1-15af-40b0-bac3-09d9854df713</a>-->
-  <div class="text-center my-3">
-    <button id="shareBtn" class="btn btn-success">Compartir resultados</button>
-    <a
-      class="btn btn-outline-primary"
-      target="_blank"
-      rel="noopener"
-      href=""
-    >
-      Ver resultados
-    </a>
-  </div>
-
-  <div class="text-center mb-3">
-  <img 
-    src="{% static 'images/logo_guambia_linea.png' %}" 
-    alt="Logo Wampia" 
-    class="img-fluid"
-    style="width: 25%; max-width: 100%;"
-  >
-</div>
-    <!-- 👇 Add this block -->
-</div> 
-
-
+    toggle.hidden = false;
+  })();
+</script>
 {% endblock %}
