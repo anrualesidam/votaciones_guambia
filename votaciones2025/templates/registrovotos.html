@@ -1,207 +1,501 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
-
 {% block baroption %}
 <li class="nav-item">
   <a class="nav-link" href="{% url 'homejurado' %}">Inicio</a>
 </li>
-
-{% endblock %} 
-
-{% block content %}
-
-
-
-<div class="d-flex align-items-center justify-content-center my-3" style="gap: 15px;">
-
-  <!-- Imagen izquierda -->
-  <img 
-    src="{% static 'images/logo_bandera_2.jpeg' %}" 
-    alt="Icono"
-    style="width: 60px; height: 60px; object-fit: contain;"
-  >
-
-  <!-- Contenedor de textos centrados -->
-  <div class="text-center">
-    <h5 class="mb-1">Bienvenido, {{ nombrejurado }}</h5>
-    <h5 class="mb-0">Perfil: {{ tipo_usuario_completo }}</h5>
-  </div>
-</div>
-
-
-
-<div class="container my-4">
-  {% csrf_token %}
-  <div class="row align-items-center">
-
-    <!-- Columna del texto -->
-    <div class="col-md-7">
-      <div style="text-align: justify; padding: 20px;">
-        <p style="font-size: 20px;">
-          <strong>Plataforma de Votaciones Wampia 2026</strong>
-        </p>
-
-        <p style="font-size: 18px;">
-          La plataforma <strong>Votaciones Wampia 2026</strong> ha sido desarrollada para facilitar la 
-          consulta de los usuarios habilitados para participar en el proceso electoral del territorio de Wampia.
-          <br><br>
-          A través de este sistema, los ciudadanos pueden verificar si están registrados para votar, 
-          asegurando un proceso transparente, ordenado y accesible para toda la comunidad Misak.
-        </p>
-      </div>
-    </div>
-
-    <!-- Columna de la imagen -->
-    <div class="col-md-5 text-center">
-      <img 
-        src="{% static 'images/logo_guambia_1.png' %}" 
-        alt="Imagen" 
-        class="img-fluid"
-        style="max-width: 60%;"
-      >
-    </div>
-
-  </div>
-</div>
-
-
-<div class="container text-center">
-  <div class="row align-items-start" style="background-color: #f5f5f5;">   
-   <div class="container">
-
-  <section class="section-content py-3">
-    <div class="row">
-      <aside class="col-lg-3"> 
-  <!-- ============= COMPONENT ============== -->
-        <nav class="sidebar card py-2" style="background-color: #2e39de;">
-        <ul class="nav flex-column" style="list-style: none; margin: 0; padding: 0;">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'homejurados' %}" 
-              style="color: #09f062; font-weight: bold; text-decoration: none; display: block; padding: 10px 15px;">
-              BUSQUEDA DE USUARIOS
-            </a>
-          </li>
-          <li class="nav-item">
-            <input type="hidden" name="iduserjurado" value="{{ iduserjurado }}">
-            <a class="nav-link" href="{% url 'registrovotos' %}" 
-              style="color: #6ab8d9; font-weight: bold; text-decoration: none; display: block; padding: 10px 15px;">
-              REPORTE DE VOTACIONES
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="btn btn-light" href="{% url 'baselogin' %}">SALIR</a>
-          </li>
-        </ul>
-        </nav>
-  <!-- ============= COMPONENT END// ============== -->	
-      </aside>
-        <main class="col-lg-9 d-flex justify-content-center">
-          <div>
-            <p style="font-size: 18px; text-align: center;">
-              <strong>INGRESAR RESULTADOS DE VOTACIONES 2026</strong>
-            </p>
-
-            <form class="d-flex flex-column align-items-center gap-3" action="{% url 'registrovotos' %}" method="GET">
-
-              <input type="hidden" name="iduserjurado" value="{{ iduserjurado }}">
-              <div class="d-flex align-items-center mb-3">
-                <label for="labelcandidato1" class="form-label me-2 mb-0" style="white-space: nowrap;">
-                  PLANCHA 1:<br>
-                   Máma Liliana Pechene Muelas <br>
-                    Tata Esteban Ussas Tombe.
-                </label>
-                <input type="text" id="numcandidato1" name="numcandidato1" class="form-control w-auto" placeholder="Ej: 10" maxlength="3" required>
-              </div>
-
-              <div class="d-flex align-items-center mb-3">
-                <label for="labelcandidato1" class="form-label me-2 mb-0" style="white-space: nowrap;">
-                  PLANCHA 2:<br>
-                   Taita Elías Ussa Chavaco <br>
-                    Taita Luis Felipe Velasco.
-                </label>
-                <input type="text" id="numcandidato2" name="numcandidato2" class="form-control w-auto" placeholder="Ej: 10" maxlength="3" required>
-              </div>
-
-
-              <div class="d-flex align-items-center mb-3">
-                <label for="labelvotoblanco" class="form-label me-2 mb-0" style="white-space: nowrap;">VOTOS EN BLANCO:</label>
-                <input type="text" id="numvotoblanco" name="numvotoblanco" class="form-control w-auto" placeholder="Ej: 10" maxlength="3" required>
-              </div>
-
-              <div class="d-flex align-items-center mb-3">
-                <label for="labelanulados" class="form-label me-2 mb-0" style="white-space: nowrap;">VOTOS ANULADOS:</label>
-                <input type="text" id="numanulados" name="numanulados" class="form-control w-auto" placeholder="Ej: 10" maxlength="3" required>
-              </div>
-              <button class="btn btn-success btn-lg mt-2" type="submit">Reportar votaciones</button>
-            </form>
-
-            <tr>
-                        {% if noexistevoto == "si" %}
-                        <th colspan="2" style="text-align: center; padding: 15px;">
-                          <h5 style="color: rgb(255, 1, 1); font-weight: bold; font-size: 28px;">
-                              ⚠️ YA REGISTRÓ EL RESULTADO DE VOTACIONES
-                            </h5>
-                          
-                        </th>
-                        {% endif %}
-                    </tr>
-          </div>
-        </main>
-
-    </div>
-  </section>
-  
-    </div><!-- container //  -->
-  
-
-
-  </div>
-
-  <div class="container text-center">
-    <div class="row align-items-start">
-      <div style="display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      margin-top: 20px;">
-    </div>
-    </div>
-  
-  
-  </div>
-
-
-
-
-  
-  
-  </div>
-
-  
-  
-<div class="container text-center">
-  <div class="row align-items-start">
-    <div style="display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    margin-top: 20px;">
-  </div>
-  </div>
-
-
-</div>
-
-
-
-
 {% endblock %}
 
+{% block content %}
+<style>
+  .wampia-jurado {
+    --wampia-ink: #0d1527;
+    --wampia-muted: #485264;
+    --wampia-blue: #123b85;
+    --wampia-blue-dark: #0c2c68;
+    --wampia-line: #d8dfe6;
+    color: var(--wampia-ink);
+    background: #eff4f7;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.45;
+    min-height: 78vh;
+    text-align: left;
+  }
+
+  .wampia-jurado *,
+  .wampia-jurado *::before,
+  .wampia-jurado *::after {
+    box-sizing: border-box;
+  }
+
+  .wampia-jurado :focus-visible {
+    outline: 3px solid #3274c5;
+    outline-offset: 3px;
+  }
+
+  .wampia-jurado .wj-header {
+    background: #fff;
+    border-bottom: 1px solid var(--wampia-line);
+  }
+
+  .wampia-jurado .wj-header-inner {
+    max-width: 100rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 3vw, 3rem);
+  }
+
+  .wampia-jurado .wj-topbar,
+  .wampia-jurado .wj-brand,
+  .wampia-jurado .wj-session,
+  .wampia-jurado .wj-tabs {
+    display: flex;
+    align-items: center;
+  }
+
+  .wampia-jurado .wj-topbar {
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: .85rem 0 .6rem;
+  }
+
+  .wampia-jurado .wj-brand {
+    gap: clamp(.75rem, 1.8vw, 1.75rem);
+    min-width: 0;
+  }
+
+  .wampia-jurado .wj-logo {
+    flex: none;
+    width: clamp(3.75rem, 9vw, 8.5rem);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+
+  .wampia-jurado .wj-brand-name {
+    margin: 0;
+    font-size: clamp(1.25rem, 2.8vw, 2.65rem);
+    font-weight: 750;
+    line-height: 1.1;
+    letter-spacing: -.035em;
+  }
+
+  .wampia-jurado .wj-brand-caption {
+    margin: .3rem 0 0;
+    font-size: clamp(.82rem, 1.8vw, 1.7rem);
+    color: var(--wampia-muted);
+  }
+
+  .wampia-jurado .wj-session {
+    flex-shrink: 0;
+    gap: clamp(.75rem, 1.75vw, 1.65rem);
+    max-width: 45%;
+  }
+
+  .wampia-jurado .wj-identity {
+    min-width: 0;
+    text-align: center;
+  }
+
+  .wampia-jurado .wj-mesa {
+    display: inline-block;
+    padding: .45rem .85rem;
+    border-radius: .65rem;
+    background: #d9eaff;
+    color: var(--wampia-blue-dark);
+    font-size: clamp(.88rem, 1.5vw, 1.4rem);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+
+  .wampia-jurado .wj-name {
+    display: block;
+    margin-top: .25rem;
+    color: var(--wampia-muted);
+    font-size: .85rem;
+    overflow-wrap: anywhere;
+  }
+
+  .wampia-jurado .wj-logout,
+  .wampia-jurado .wj-tab,
+  .wampia-jurado .wj-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .65em;
+    text-decoration: none;
+  }
+
+  .wampia-jurado .wj-logout {
+    flex-shrink: 0;
+    min-height: 2.75rem;
+    padding-inline-start: clamp(.75rem, 1.75vw, 1.65rem);
+    border-inline-start: 1px solid #bfc8d3;
+    color: var(--wampia-ink);
+    font-size: clamp(.88rem, 1.35vw, 1.3rem);
+    font-weight: 650;
+  }
+
+  .wampia-jurado .wj-logout:hover,
+  .wampia-jurado .wj-tab:hover {
+    color: var(--wampia-blue);
+  }
+
+  .wampia-jurado .wj-icon {
+    flex: none;
+    width: 1.3em;
+    height: 1.3em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .wampia-jurado .wj-tabs {
+    flex-wrap: wrap;
+    gap: clamp(.25rem, 2vw, 1.9rem);
+  }
+
+  .wampia-jurado .wj-tab {
+    min-height: 3.4rem;
+    padding: .85rem clamp(.6rem, 1.1vw, 1.15rem);
+    border-bottom: .22rem solid transparent;
+    color: var(--wampia-muted);
+    font-size: clamp(.9rem, 1.65vw, 1.55rem);
+  }
+
+  .wampia-jurado .wj-tab[aria-current="page"] {
+    border-color: var(--wampia-blue);
+    color: var(--wampia-ink);
+    font-weight: 720;
+  }
+
+  .wampia-jurado .wj-body {
+    max-width: 100rem;
+    margin-inline: auto;
+    padding: clamp(1.25rem, 4vw, 3.75rem) clamp(.85rem, 4.5vw, 4.25rem);
+  }
+
+  .wampia-jurado .wj-platform-description {
+    margin: 0 0 clamp(1.25rem, 2.5vw, 2.35rem);
+    padding-inline: clamp(1.15rem, 3.35vw, 3.15rem);
+    color: var(--wampia-muted);
+    font-size: clamp(1rem, 1.35vw, 1.25rem);
+    line-height: 1.6;
+  }
+
+  .wampia-jurado .wj-platform-description strong {
+    color: var(--wampia-ink);
+  }
+
+  .wampia-jurado .wj-card {
+    padding: clamp(1.15rem, 3.35vw, 3.15rem);
+    border: 1px solid var(--wampia-line);
+    border-radius: 1.15rem;
+    background: #fff;
+    box-shadow: 0 2px 5px rgb(13 21 39 / 5%), 0 8px 24px rgb(13 21 39 / 4%);
+    container-type: inline-size;
+  }
+
+  .wampia-jurado .wj-title {
+    margin: 0;
+    font-size: clamp(1.7rem, 3.6vw, 3.2rem);
+    font-weight: 780;
+    line-height: 1.1;
+    letter-spacing: -.035em;
+  }
+
+  .wampia-jurado .wj-intro {
+    margin: .75rem 0 clamp(1.1rem, 1.85vw, 1.75rem);
+    color: var(--wampia-muted);
+    font-size: clamp(1rem, 1.85vw, 1.7rem);
+  }
+
+  .wampia-jurado .wj-control,
+  .wampia-jurado .wj-button {
+    min-height: clamp(3rem, 4.9vw, 4.5rem);
+    border-radius: .65rem;
+    font: inherit;
+    font-size: clamp(1rem, 1.7vw, 1.55rem);
+    line-height: 1.25;
+  }
+
+  .wampia-jurado .wj-control {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: .65rem clamp(.7rem, 1.5vw, 1.45rem);
+    border: 1px solid #a7b1be;
+    background: #fff;
+    color: var(--wampia-ink);
+  }
+
+  .wampia-jurado .wj-control::placeholder {
+    color: var(--wampia-muted);
+    opacity: 1;
+  }
+
+  .wampia-jurado .wj-button {
+    padding: .65rem clamp(1rem, 2.25vw, 2rem);
+    border: 1px solid var(--wampia-blue);
+    background: var(--wampia-blue);
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .wampia-jurado .wj-button:hover {
+    border-color: var(--wampia-blue-dark);
+    background: var(--wampia-blue-dark);
+    color: #fff;
+  }
+
+  .wampia-jurado .wj-notice {
+    display: flex;
+    align-items: center;
+    gap: clamp(.75rem, 2vw, 1.8rem);
+    padding: clamp(.9rem, 1.35vw, 1.25rem) clamp(1rem, 2.65vw, 2.5rem);
+    border-radius: .85rem;
+    background: var(--wj-notice-bg);
+    color: var(--wj-notice-ink);
+  }
+
+  .wampia-jurado .wj-notice .wj-icon {
+    width: clamp(1.75rem, 3.7vw, 3.45rem);
+    height: auto;
+    color: var(--wj-notice-accent);
+  }
+
+  .wampia-jurado .wj-notice-text {
+    padding-inline-start: clamp(.75rem, 1.85vw, 1.7rem);
+    border-inline-start: 1px solid var(--wj-notice-accent);
+    overflow-wrap: anywhere;
+  }
+
+  .wampia-jurado .wj-notice-title {
+    margin: 0;
+    font-size: clamp(1.2rem, 2.35vw, 2.15rem);
+    font-weight: 760;
+    line-height: 1.25;
+  }
+
+  .wampia-jurado .wj-warning {
+    --wj-notice-bg: #fff4dd;
+    --wj-notice-ink: #432e0c;
+    --wj-notice-accent: #935a0a;
+    padding-block: clamp(1.1rem, 2.55vw, 2.35rem);
+  }
+
+  .wampia-jurado .wj-report {
+    --wj-count-width: 36.5%;
+    margin: 0;
+  }
+
+  .wampia-jurado .wj-report-heading,
+  .wampia-jurado .wj-report-row,
+  .wampia-jurado .wj-report-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--wj-count-width));
+    align-items: center;
+    column-gap: clamp(1rem, 2.25vw, 2rem);
+  }
+
+  .wampia-jurado .wj-report-heading {
+    margin: 0;
+    font-size: clamp(1rem, 1.65vw, 1.5rem);
+    font-weight: 720;
+  }
+
+  .wampia-jurado .wj-report-heading span,
+  .wampia-jurado .wj-report-actions > button {
+    grid-column: 2;
+  }
+
+  .wampia-jurado .wj-report-row {
+    padding-block: clamp(.8rem, 1.2vw, 1.15rem);
+    border-bottom: 1px solid var(--wampia-line);
+  }
+
+  .wampia-jurado .wj-report-label {
+    display: block;
+    margin: 0;
+    font-size: clamp(1.1rem, 2vw, 1.8rem);
+    font-weight: 740;
+    line-height: 1.25;
+  }
+
+  .wampia-jurado .wj-report-names {
+    margin: .15rem 0 0;
+    color: var(--wampia-muted);
+    font-size: clamp(.95rem, 1.7vw, 1.5rem);
+    line-height: 1.4;
+  }
+
+  .wampia-jurado .wj-report-row .wj-control {
+    min-height: clamp(2.8rem, 4vw, 3.75rem);
+  }
+
+  .wampia-jurado .wj-report-actions,
+  .wampia-jurado .wj-report-notice {
+    margin-top: clamp(1rem, 1.7vw, 1.55rem);
+  }
+
+  @container (max-width: 32rem) {
+    .wampia-jurado .wj-report-heading {
+      display: none;
+    }
+
+    .wampia-jurado .wj-report-row,
+    .wampia-jurado .wj-report-actions {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: .6rem;
+    }
+
+    .wampia-jurado .wj-report-actions > button {
+      grid-column: 1;
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .wampia-jurado .wj-topbar {
+      flex-wrap: wrap;
+      gap: .8rem;
+    }
+
+    .wampia-jurado .wj-session {
+      justify-content: space-between;
+      width: 100%;
+      max-width: none;
+    }
+
+    .wampia-jurado .wj-identity {
+      text-align: left;
+    }
+
+    .wampia-jurado .wj-logout {
+      border: 0;
+    }
+  }
+</style>
+
+<div class="wampia-jurado">
+  <header class="wj-header">
+    <div class="wj-header-inner">
+      <div class="wj-topbar">
+        <div class="wj-brand">
+          <img class="wj-logo" src="{% static 'images/logo_guambia_1.png' %}" alt="">
+          <div>
+            <p class="wj-brand-name">Votaciones Wampia 2027</p>
+            <p class="wj-brand-caption">Autoridad Ancestral del Pueblo Misak</p>
+          </div>
+        </div>
+
+        <div class="wj-session">
+          <div class="wj-identity">
+            <span class="wj-mesa">{% if mesajurado %}Mesa {{ mesajurado }} · {% endif %}{{ tipo_usuario_completo|default:"Jurado" }}</span>
+            {% if nombrejurado %}<span class="wj-name">{{ nombrejurado }}</span>{% endif %}
+          </div>
+          <a class="wj-logout" href="{% url 'baselogin' %}">
+            <svg class="wj-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M13 5V3H3v18h10v-2m-4-7h12m-4-4 4 4-4 4"/>
+            </svg>
+            Cerrar sesión
+          </a>
+        </div>
+      </div>
+
+      <nav class="wj-tabs" aria-label="Opciones del jurado">
+        <a class="wj-tab" href="{% url 'homejurados' %}">
+          <svg class="wj-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="9" cy="7" r="3"/>
+            <path d="M2 21v-2a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v2m0-17a3 3 0 0 1 0 6m6 11v-2a5 5 0 0 0-4-5"/>
+          </svg>
+          Consulta de votantes
+        </a>
+        <a class="wj-tab" href="{% url 'registrovotos' %}" aria-current="page">
+          <svg class="wj-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <rect x="4" y="2" width="16" height="20" rx="2"/>
+            <path d="M8 7h8m-8 5h8m-8 5h5"/>
+          </svg>
+          Reporte de votaciones
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wj-body">
+    <p class="wj-platform-description">
+      La plataforma <strong>Votaciones Wampia 2027</strong> ha sido desarrollada para facilitar la
+      consulta de los usuarios habilitados para participar en el proceso electoral del territorio de Wampia.
+      <br><br>
+      A través de este sistema, los ciudadanos pueden verificar si están registrados para votar,
+      asegurando un proceso transparente, ordenado y accesible para toda la comunidad Misak.
+    </p>
+
+    <section class="wj-card" aria-labelledby="wj-report-title">
+      <h1 class="wj-title" id="wj-report-title">Ingresar resultados de votación</h1>
+      <p class="wj-intro" id="wj-report-instructions">Digita la cantidad de votos de cada categoría.</p>
+
+      <form class="wj-report" action="{% url 'registrovotos' %}" method="get"
+            aria-describedby="wj-report-instructions">
+        <input type="hidden" name="iduserjurado" value="{{ iduserjurado }}">
+
+        <p class="wj-report-heading" aria-hidden="true"><span>Cantidad de votos</span></p>
+
+        <div class="wj-report-row">
+          <div>
+            <label class="wj-report-label" for="numcandidato1">Plancha 1</label>
+            <p class="wj-report-names" id="wj-plancha-1">Máma Liliana Pechene Muelas y Tata Esteban Ussas Tombe.</p>
+          </div>
+          <input class="wj-control" type="text" inputmode="numeric" id="numcandidato1" name="numcandidato1"
+                 aria-describedby="wj-plancha-1" placeholder="Ej. 10" maxlength="3" required>
+        </div>
+
+        <div class="wj-report-row">
+          <div>
+            <label class="wj-report-label" for="numcandidato2">Plancha 2</label>
+            <p class="wj-report-names" id="wj-plancha-2">Taita Elías Ussa Chavaco y Taita Luis Felipe Velasco.</p>
+          </div>
+          <input class="wj-control" type="text" inputmode="numeric" id="numcandidato2" name="numcandidato2"
+                 aria-describedby="wj-plancha-2" placeholder="Ej. 10" maxlength="3" required>
+        </div>
+
+        <div class="wj-report-row">
+          <label class="wj-report-label" for="numvotoblanco">Votos en blanco</label>
+          <input class="wj-control" type="text" inputmode="numeric" id="numvotoblanco" name="numvotoblanco"
+                 placeholder="Ej. 10" maxlength="3" required>
+        </div>
+
+        <div class="wj-report-row">
+          <label class="wj-report-label" for="numanulados">Votos anulados</label>
+          <input class="wj-control" type="text" inputmode="numeric" id="numanulados" name="numanulados"
+                 placeholder="Ej. 10" maxlength="3" required>
+        </div>
+
+        <div class="wj-report-actions">
+          <button class="wj-button" type="submit">Reportar resultados</button>
+        </div>
+      </form>
+
+      {% if noexistevoto == "si" %}
+        <div class="wj-notice wj-warning wj-report-notice" role="status">
+          <svg class="wj-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M10.3 4.4a2 2 0 0 1 3.4 0l8.1 14a2 2 0 0 1-1.7 3H3.9a2 2 0 0 1-1.7-3zM12 9v4m0 4h.01"/>
+          </svg>
+          <div class="wj-notice-text">
+            <h2 class="wj-notice-title">El resultado de votación ya fue registrado</h2>
+          </div>
+        </div>
+      {% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}
 
 {% block baroptionpies %}
-
 <li class="nav-item">
   <a class="nav-link" href="{% url 'homejurado' %}">Inicio</a>
 </li>
-
 {% endblock %}

@@ -242,10 +242,10 @@ class Home:
         return render(request, 'homejurado.html', resultadoss)
 
     def homejurados(self, request):
-        resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"0"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
+        resultadossa={"tipo_usuario_completo":"JURADO","noexistuser":"0"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
             
 
-        return render(request, 'homejurado.html', resultadoss)
+        return render(request, 'homejurado.html', resultadossa)
     
     def homeadministrador(self, request):
     
