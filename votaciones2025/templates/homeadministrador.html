@@ -663,8 +663,10 @@
               <span class="wj-tag">Voto: {{ voto }}</span>
             {% endif %}
 
+            
             <div class="wj-action-links">
               <a class="wj-button wj-button-outline" href="{% url 'homeadministradors' %}">Buscar otro votante</a>
+              <!--
               {% if voto == "no" %}
                 <form method="post" action="{% url 'registrar_voto_admin' %}">
                   {% csrf_token %}
@@ -676,7 +678,10 @@
                   </button>
                 </form>
               {% endif %}
+              -->
             </div>
+
+            
           </div>
         </div>
       {% endif %}
