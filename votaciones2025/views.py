@@ -48,7 +48,7 @@ class loginvotaciones:
             # Leer todos los datos del nodo
             data_responsables = ref_respnsables.get()
 
-            print("Data responsables=",data_responsables)
+            #print("Data responsables=",data_responsables)
 
             if self.tipo_user == "":
                 messages.warning(
@@ -69,9 +69,15 @@ class loginvotaciones:
             r = requests.post(url, json=payload, timeout=10)
             
             data = r.json()
+
+
+            ref_parampltaforma=db.reference("paramplataforma")
+            bloqueodebusquedadeuser=ref_parampltaforma.get()["bloqueobusquedauser"]
+            print("Parametros_plataforma=",bloqueodebusquedadeuser)
             
-            
-            context = {'contenido': self.username.lower(),'tipo_usuario_completo':tipos_de_usuarios[self.tipo_user]}
+            context = {'contenido': self.username.lower(),
+                       'tipo_usuario_completo':tipos_de_usuarios[self.tipo_user],
+                       'bloqueo_busqueda_user':bloqueodebusquedadeuser}
             
        
 
@@ -216,6 +222,13 @@ class Home:
         resultadoss={}
 
         try:
+            #config de plataforma
+
+            ref_parampltaforma=db.reference("paramplataforma")
+            print("Parametros_plataforma home user=",ref_parampltaforma)
+
+
+            #======================================
             ref_respnsablesdb = db.reference("usuariosresponsables")
 
             #print("RESPONSABLES JURADOS",ref_respnsablesdb.get(),iduserjuradoin)
@@ -233,17 +246,25 @@ class Home:
             resultadoss["mesajurado"]=ref_respnsablesdb.get()[iduserjuradoin]["mesa"]
             resultadoss["nombrejurado"]=ref_respnsablesdb.get()[iduserjuradoin]["nombre"]
 
+            resultadoss["bloqueo_busqueda_user"]=ref_parampltaforma.get()["bloqueobusquedauser"]
 
-            #print("RESULTADOS:-----",resultadoss)
+            print("RESULTADOS:-----",resultadoss)
         except:
+            ref_parampltaforma=db.reference("paramplataforma").get()["bloqueobusquedauser"]
             
-            resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
+            resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1",
+                         "bloqueo_busqueda_user":ref_parampltaforma}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
             
 
         return render(request, 'homejurado.html', resultadoss)
 
     def homejurados(self, request):
-        resultadossa={"tipo_usuario_completo":"JURADO","noexistuser":"0"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
+        ref_parampltaforma=db.reference("paramplataforma")
+        bloqueodebusquedadeuser=ref_parampltaforma.get()["bloqueobusquedauser"]
+        print("Parametros_plataforma=",bloqueodebusquedadeuser)
+        
+        resultadossa={"tipo_usuario_completo":"JURADO","noexistuser":"0",
+                      'bloqueo_busqueda_user':bloqueodebusquedadeuser}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
             
 
         return render(request, 'homejurado.html', resultadossa)
@@ -270,6 +291,11 @@ class Home:
         resultadoss={}
 
         try:
+            #confg plataforma
+            ref_parampltaforma=db.reference("paramplataforma")
+            print("Parametros_plataforma home user=",ref_parampltaforma)
+
+            #configuracion
             ref_respnsablesdb = db.reference("usuariosresponsables")
 
             #print("RESPONSABLES JURADOS",ref_respnsablesdb.get(),iduserjuradoin)
@@ -292,19 +318,28 @@ class Home:
 
             #print("RESULTADOS2 :-----",resultadoss)
             resultadoss["nombrejurado"]=ref_respnsablesdb.get()[iduserjuradoin]["nombre"]
+            resultadoss["bloqueo_busqueda_user"]=ref_parampltaforma.get()["bloqueobusquedauser"]
 
 
             print("RESULTADOS:-----",resultadoss)
         except:
+            ref_parampltaforma=db.reference("paramplataforma").get()["bloqueobusquedauser"]
             
-            resultadoss={"tipo_usuario_completo":"ADMINISTRADOR/A","noexistuser":"1"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
+            resultadoss={"tipo_usuario_completo":"ADMINISTRADOR/A","noexistuser":"1",
+                         "bloqueo_busqueda_user":ref_parampltaforma}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
             
 
         return render(request, 'homeadministrador.html', resultadoss)
     
     def homeadministradors(self, request):
-        resultadoss={"tipo_usuario_completo":"ADMINISTRADOR/A","noexistuser":"0"}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
-        return render(request, 'homeadministrador.html', resultadoss)
+        ref_parampltaforma=db.reference("paramplataforma")
+        bloqueodebusquedadeuser=ref_parampltaforma.get()["bloqueobusquedauser"]
+        print("Parametros_plataforma=",bloqueodebusquedadeuser)
+        
+        resultadossa={"tipo_usuario_completo":"ADMINISTRADOR/A","noexistuser":"0",
+                        'bloqueo_busqueda_user':bloqueodebusquedadeuser}
+        
+        return render(request, 'homeadministrador.html', resultadossa)
     
 
     def registrar_voto(self, request):
@@ -439,6 +474,15 @@ class Home:
         return render(request, 'registrovotos.html', resultadoss)
     
     def registrovotosexitoso(self, request):
-        resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1"}
-        return render(request, 'registrovotos.html', resultadoss)
+        #resultadoss={"tipo_usuario_completo":"JURADO","noexistuser":"1"}
+        #return render(request, 'registrovotos.html', resultadoss)
+        ref_parampltaforma=db.reference("paramplataforma")
+        bloqueodebusquedadeuser=ref_parampltaforma.get()["bloqueobusquedauser"]
+        print("Parametros_plataforma=",bloqueodebusquedadeuser)
+        
+        resultadossa={"tipo_usuario_completo":"JURADO","noexistuser":"0",
+                    'bloqueo_busqueda_user':bloqueodebusquedadeuser}#['tipo_usuario_completo']="MÉDICO CIRUJANO"
+            
+
+        return render(request, 'homejurado.html', resultadossa)
     
