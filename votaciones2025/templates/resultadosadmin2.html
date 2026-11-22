@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block baroption %}
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'homeadministrador' %}">Inicio</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<style>
+  .wampia-jurado {
+    --wampia-ink: #0d1527;
+    --wampia-muted: #485264;
+    --wampia-blue: #123b85;
+    --wampia-blue-dark: #0c2c68;
+    --wampia-line: #d1dae5;
+    color: var(--wampia-ink);
+    background: #edf2f5;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.45;
+    min-height: 100vh;
+    text-align: left;
+  }
+
+  .wampia-jurado *,
+  .wampia-jurado *::before,
+  .wampia-jurado *::after {
+    box-sizing: border-box;
+  }
+
+  .wampia-jurado :focus-visible {
+    outline: 3px solid #3274c5;
+    outline-offset: 3px;
+  }
+
+  .wampia-jurado .wj-header {
+    background: #fff;
+    border-bottom: 1px solid var(--wampia-line);
+  }
+
+  .wampia-jurado .wj-header-inner {
+    max-width: 144rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 2.54vw, 3.25rem);
+  }
+
+  .wampia-jurado .wj-topbar,
+  .wampia-jurado .wj-brand,
+  .wampia-jurado .wj-session,
+  .wampia-jurado .wj-tabs {
+    display: flex;
+    align-items: center;
+  }
+
+  .wampia-jurado .wj-topbar {
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: clamp(.7rem, .78vw, 1rem) 0 clamp(.5rem, .49vw, .625rem) clamp(0rem, 1.17vw, 1.5rem);
+  }
+
+  .wampia-jurado .wj-brand {
+    gap: clamp(.75rem, 1.95vw, 2.5rem);
+    min-width: 0;
+  }
+
+  .wampia-jurado .wj-logo {
+    flex: none;
+    width: clamp(3.75rem, 8.79vw, 11.25rem);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+
+  .wampia-jurado .wj-brand-name {
+    margin: 0;
+    font-size: clamp(1.25rem, 2.78vw, 3.55rem);
+    font-weight: 750;
+    line-height: 1.1;
+    letter-spacing: -.035em;
+  }
+
+  .wampia-jurado .wj-brand-caption {
+    margin: .3rem 0 0;
+    font-size: clamp(.82rem, 1.76vw, 2.25rem);
+    color: var(--wampia-muted);
+  }
+
+  .wampia-jurado .wj-session {
+    flex-shrink: 0;
+    gap: clamp(.75rem, 1.8vw, 2.3rem);
+    max-width: 45%;
+  }
+
+  .wampia-jurado .wj-identity {
+    min-width: 0;
+    text-align: center;
+  }
+
+  .wampia-jurado .wj-role {
+    display: inline-block;
+    padding: clamp(.45rem, .65vw, .85rem) clamp(.75rem, 1.15vw, 1.5rem);
+    border-radius: clamp(.65rem, .78vw, 1rem);
+    background: #d5e4f8;
+    color: var(--wampia-blue-dark);
+    font-size: clamp(.88rem, 1.52vw, 1.95rem);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+    text-transform: uppercase;
+  }
+
+  .wampia-jurado .wj-logout,
+  .wampia-jurado .wj-tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .65em;
+    text-decoration: none;
+  }
+
+  .wampia-jurado .wj-logout {
+    flex-shrink: 0;
+    min-height: clamp(2.75rem, 3.2vw, 4.1rem);
+    padding-inline-start: clamp(.75rem, 2.05vw, 2.65rem);
+    border-inline-start: 1px solid #bfc8d3;
+    color: var(--wampia-ink);
+    font-size: clamp(.88rem, 1.52vw, 1.95rem);
+    font-weight: 650;
+  }
+
+  .wampia-jurado .wj-logout:hover,
+  .wampia-jurado .wj-tab:hover {
+    color: var(--wampia-blue);
+  }
+
+  .wampia-jurado .wj-icon {
+    flex: none;
+    width: 1.3em;
+    height: 1.3em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .wampia-jurado .wj-tabs {
+    flex-wrap: wrap;
+    gap: clamp(.25rem, 1.56vw, 2rem);
+  }
+
+  .wampia-jurado .wj-tab {
+    min-height: clamp(3.4rem, 4.88vw, 6.25rem);
+    padding: .65rem clamp(.6rem, 1.17vw, 1.5rem);
+    border-bottom: clamp(.2rem, .29vw, .375rem) solid transparent;
+    color: var(--wampia-muted);
+    font-size: clamp(.9rem, 1.67vw, 2.15rem);
+  }
+
+  .wampia-jurado .wj-tab[aria-current="page"] {
+    border-color: var(--wampia-blue);
+    color: var(--wampia-ink);
+    font-weight: 720;
+  }
+
+  .wampia-jurado .wj-body {
+    max-width: 144rem;
+    margin-inline: auto;
+    padding: clamp(1.25rem, 3.81vw, 4.875rem) clamp(.85rem, 4.49vw, 5.75rem);
+  }
+
+  .wampia-jurado .wj-card {
+    padding: clamp(1.05rem, 2.95vw, 3.8rem) clamp(1rem, 3.42vw, 4.375rem);
+    border: 1px solid var(--wampia-line);
+    border-radius: clamp(1rem, 1.36vw, 1.75rem);
+    background: #fff;
+  }
+
+  .wampia-jurado .wj-title {
+    margin: 0 0 clamp(1.25rem, 2.15vw, 2.75rem);
+    font-size: clamp(1.7rem, 3.13vw, 4rem);
+    font-weight: 760;
+    line-height: 1.12;
+    letter-spacing: -.025em;
+  }
+
+  .wampia-jurado .wj-dashboard {
+    display: block;
+    width: 100%;
+    height: clamp(42rem, 42.9vw, 61.75rem);
+    border: 0;
+    border-radius: .85rem;
+    background: #fff;
+  }
+
+  @media (max-width: 48rem) {
+    .wampia-jurado .wj-dashboard {
+      height: max(56rem, 125vh);
+    }
+
+    .wampia-jurado .wj-topbar {
+      flex-wrap: wrap;
+      gap: .8rem;
+    }
+
+    .wampia-jurado .wj-session {
+      justify-content: space-between;
+      width: 100%;
+      max-width: none;
+    }
+
+    .wampia-jurado .wj-identity {
+      text-align: left;
+    }
+
+    .wampia-jurado .wj-logout {
+      border: 0;
+    }
+  }
+</style>
+
+<div class="wampia-jurado">
+  <header class="wj-header">
+    <div class="wj-header-inner">
+      <div class="wj-topbar">
+        <div class="wj-brand">
+          <img class="wj-logo" src="{% static 'images/logo_guambia_1.png' %}" alt="">
+          <div>
+            <p class="wj-brand-name">Votaciones Wampia 2027</p>
+            <p class="wj-brand-caption">Autoridad Ancestral del Pueblo Misak</p>
+          </div>
+        </div>
+
+        <div class="wj-session">
+          <div class="wj-identity">
+            <span class="wj-role"{% if nombrejurado %} title="{{ nombrejurado }}"{% endif %}>{{ tipo_usuario_completo|default:"Administrador/a" }}</span>
+          </div>
+          <a class="wj-logout" href="{% url 'baselogin' %}">
+            <svg class="wj-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M13 5V3H3v18h10v-2m-4-7h12m-4-4 4 4-4 4"/>
+            </svg>
+            Cerrar sesión
+          </a>
+        </div>
+      </div>
+
+      <nav class="wj-tabs" aria-label="Opciones de administración">
+        <a class="wj-tab" href="{% url 'homeadministrador' %}">
+          <svg class="wj-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="9" cy="7" r="3"/>
+            <path d="M2 21v-2a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v2m0-17a3 3 0 0 1 0 6m6 11v-2a5 5 0 0 0-4-5"/>
+          </svg>
+          Consulta de votantes
+        </a>
+        <a class="wj-tab" href="{% url 'resultadosadmin' %}" aria-current="page">
+          <svg class="wj-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <rect x="4" y="2" width="16" height="20" rx="2"/>
+            <path d="M8 7h8m-8 5h8m-8 5h5"/>
+          </svg>
+          Resultados de votaciones
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wj-body">
+    <section class="wj-card" aria-labelledby="wj-results-title">
+      <h1 class="wj-title" id="wj-results-title">Resultados de votaciones</h1>
+      <iframe
+        class="wj-dashboard"
+        title="Panel de resultados de votaciones"
+        src="https://anrualesidam.retool.com/embedded/public/10a00445-9088-4215-a712-73065d3d21fb"
+        allow="clipboard-write; fullscreen; geolocation; microphone; camera"
+        referrerpolicy="strict-origin-when-cross-origin"
+        loading="lazy"
+      ></iframe>
+    </section>
+  </div>
+</div>
+{% endblock %}
