@@ -98,6 +98,10 @@ class loginvotaciones:
                 messages.warning(
                     request, "Contraseña incorrecta.")
                 return render(request, 'alert_nofile.html')
+            elif error_msg == "INVALID_EMAIL":
+                messages.warning(
+                    request, "Correo incorrecto.")
+                return render(request, 'alert_nofile.html')
             elif error_msg == "USER_DISABLED":
                 
                 messages.warning(
